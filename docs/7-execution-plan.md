@@ -11,6 +11,7 @@
 | 버전 | 변경일 | 작성자 | 변경 내용 |
 |------|--------|--------|-----------|
 | 1.0 | 2026-04-28 | Execution Planner | 최초 작성 (DB 5건, BE 8건, FE 14건, 총 27 Task) |
+| 1.1 | 2026-04-28 | Executor | DB-01~DB-05 완료 (체크박스 체크 완료) |
 
 ---
 
@@ -67,11 +68,11 @@ FE-01
 **설명:** PostgreSQL을 설치하고 `todolista_dev` 전용 DB 및 사용자 계정을 생성하여 개발 환경 기반을 마련한다.
 
 **완료 조건:**
-- [ ] PostgreSQL 서비스 정상 기동, `psql --version`으로 버전 확인
-- [ ] `todolista_dev` 데이터베이스 및 전용 사용자 계정 생성
-- [ ] `.env`에 `DATABASE_URL` 설정 완료
-- [ ] pg 라이브러리로 연결 테스트 스크립트 실행 시 "Connected" 확인
-- [ ] `.env`가 `.gitignore`에 등록됨
+- [x] PostgreSQL 서비스 정상 기동, `psql --version`으로 버전 확인
+- [x] `todolista_dev` 데이터베이스 및 전용 사용자 계정 생성
+- [x] `.env`에 `DATABASE_URL` 설정 완료
+- [x] pg 라이브러리로 연결 테스트 스크립트 실행 시 "Connected" 확인
+- [x] `.env`가 `.gitignore`에 등록됨
 
 **의존성:** 없음
 **예상 소요:** 30분
@@ -83,11 +84,11 @@ FE-01
 **설명:** `database/schema.sql`을 `todolista_dev`에 실행하고 테이블·ENUM·FK 제약조건이 의도대로 생성되었는지 검증한다.
 
 **완료 조건:**
-- [ ] `psql -d todolista_dev -f database/schema.sql` 오류 없이 완료
-- [ ] `\dt`로 `users`, `categories`, `todos` 3개 테이블 존재 확인
-- [ ] `\dT`로 `todo_status` ENUM(`PENDING`, `COMPLETED`) 정의 확인
-- [ ] `categories.user_id` → CASCADE, `todos.category_id` → SET NULL FK 제약조건 확인
-- [ ] `schema.sql` 재실행 시 멱등성 보장 확인
+- [x] `psql -d todolista_dev -f database/schema.sql` 오류 없이 완료
+- [x] `\dt`로 `users`, `categories`, `todos` 3개 테이블 존재 확인
+- [x] `\dT`로 `todo_status` ENUM(`PENDING`, `COMPLETED`) 정의 확인
+- [x] `categories.user_id` → CASCADE, `todos.category_id` → SET NULL FK 제약조건 확인
+- [x] `schema.sql` 재실행 시 멱등성 보장 확인
 
 **의존성:** DB-01 완료 후
 **예상 소요:** 30분
@@ -99,10 +100,10 @@ FE-01
 **설명:** 5개 인덱스와 UNIQUE 제약조건이 실제로 생성되었는지 확인하고 EXPLAIN으로 인덱스 활용 여부를 검증한다.
 
 **완료 조건:**
-- [ ] `\di`로 5개 인덱스(`idx_categories_user_id`, `idx_todos_user_id`, `idx_todos_category_id`, `idx_todos_status`, `idx_todos_due_date`) 존재 확인
-- [ ] `categories(user_id, name)` 복합 UNIQUE 위반 시 오류 발생 확인 (INSERT 테스트)
-- [ ] `users.email` UNIQUE 위반 시 오류 발생 확인 (INSERT 테스트)
-- [ ] `EXPLAIN SELECT * FROM todos WHERE user_id = $1` 실행 시 Index Scan 확인
+- [x] `\di`로 5개 인덱스(`idx_categories_user_id`, `idx_todos_user_id`, `idx_todos_category_id`, `idx_todos_status`, `idx_todos_due_date`) 존재 확인
+- [x] `categories(user_id, name)` 복합 UNIQUE 위반 시 오류 발생 확인 (INSERT 테스트)
+- [x] `users.email` UNIQUE 위반 시 오류 발생 확인 (INSERT 테스트)
+- [x] `EXPLAIN SELECT * FROM todos WHERE user_id = $1` 실행 시 Index Scan 확인
 
 **의존성:** DB-02 완료 후
 **예상 소요:** 30분
@@ -114,9 +115,9 @@ FE-01
 **설명:** 개발 DB와 독립된 `todolista_test` DB를 생성하고 `.env.test`를 구성하여 테스트 격리 환경을 구축한다.
 
 **완료 조건:**
-- [ ] `todolista_test` DB 생성 및 `schema.sql` 동일 적용
-- [ ] `.env.test`에 `DATABASE_URL`이 `todolista_test`를 가리키도록 설정
-- [ ] `.env.test`가 `.gitignore`에 등록됨
+- [x] `todolista_test` DB 생성 및 `schema.sql` 동일 적용
+- [x] `.env.test`에 `DATABASE_URL`이 `todolista_test`를 가리키도록 설정
+- [x] `.env.test`가 `.gitignore`에 등록됨
 - [ ] `NODE_ENV=test` 실행 시 `.env.test`를 자동 로드하는 로직 구현 확인
 - [ ] 테스트 전후 `TRUNCATE ... CASCADE` 초기화 스크립트 준비 완료
 
@@ -130,11 +131,11 @@ FE-01
 **설명:** 개발 및 기능 검증용 초기 데이터를 `database/seed.sql`(또는 `seed.js`)로 작성하고 `npm run db:seed`로 일괄 삽입한다.
 
 **완료 조건:**
-- [ ] 테스트 사용자 최소 2건(bcrypt 해시 비밀번호 포함) `users` 삽입
-- [ ] 각 사용자별 카테고리 최소 2건씩(총 4건 이상) `categories` 삽입
-- [ ] 다양한 `status`와 `due_date`를 포함한 `todos` 최소 10건 삽입 (Overdue 포함)
-- [ ] `npm run db:seed` 한 번으로 전체 삽입 가능하며 재실행 시 오류 없음 (멱등성)
-- [ ] 삽입 후 `SELECT COUNT(*)` 쿼리로 각 테이블 건수 확인
+- [x] 테스트 사용자 최소 2건(bcrypt 해시 비밀번호 포함) `users` 삽입
+- [x] 각 사용자별 카테고리 최소 2건씩(총 4건 이상) `categories` 삽입
+- [x] 다양한 `status`와 `due_date`를 포함한 `todos` 최소 10건 삽입 (Overdue 포함)
+- [x] `npm run db:seed` 한 번으로 전체 삽입 가능하며 재실행 시 오류 없음 (멱등성)
+- [x] 삽입 후 `SELECT COUNT(*)` 쿼리로 각 테이블 건수 확인
 
 **의존성:** DB-03, DB-04 완료 후
 **예상 소요:** 45분
