@@ -1,0 +1,1591 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TodoList API",
+    "version": "1.0.0",
+    "description": "개인 할일 관리 애플리케이션 REST API입니다. 사용자 인증(JWT), 할일(Todo) CRUD, 카테고리(Category) CRUD 기능을 제공합니다.\n\n## 인증 방식\n모든 보호된 엔드포인트는 `Authorization: Bearer <token>` 헤더를 요구합니다. 토큰은 `/api/auth/login`을 통해 발급받습니다.\n\n## 비즈니스 규칙\n- 사용자는 자신의 데이터(할일, 카테고리)에만 접근 가능합니다.\n- 동일 사용자 내 카테고리명 중복은 허용되지 않습니다.\n- 할일 상태는 `PENDING`(미완료) 또는 `COMPLETED`(완료)만 존재합니다.\n- 카테고리 삭제 시 해당 카테고리의 할일은 삭제되지 않으며 `categoryId`가 `null`로 변경됩니다.\n- 사용자 탈퇴 시 모든 관련 데이터(카테고리, 할일)가 즉시 영구 삭제됩니다.",
+    "contact": {
+      "email": "realbackok@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "로컬 개발 서버"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "사용자 인증 및 계정 관리 (회원가입, 로그인, 로그아웃, 탈퇴, 비밀번호 변경)"
+    },
+    {
+      "name": "Todo",
+      "description": "할일 CRUD 및 상태 관리"
+    },
+    {
+      "name": "Category",
+      "description": "할일 분류용 카테고리 CRUD"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT 액세스 토큰. `/api/auth/login` 응답의 `token` 필드 값을 사용합니다."
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "description": "사용자 공개 정보 (비밀번호 제외)",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "사용자 고유 식별자",
+            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "사용자 이메일 주소 (로그인 식별자)",
+            "example": "user@example.com"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "계정 생성 일시 (ISO 8601)",
+            "example": "2026-04-28T09:00:00.000Z"
+          }
+        },
+        "required": ["id", "email", "createdAt"]
+      },
+      "Category": {
+        "type": "object",
+        "description": "할일 분류 카테고리",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "카테고리 고유 식별자",
+            "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "소유 사용자 ID",
+            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "카테고리명 (동일 사용자 내 중복 불가, 최대 100자)",
+            "example": "업무"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "카테고리 생성 일시 (ISO 8601)",
+            "example": "2026-04-28T09:00:00.000Z"
+          }
+        },
+        "required": ["id", "userId", "name", "createdAt"]
+      },
+      "Todo": {
+        "type": "object",
+        "description": "할일 항목",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "할일 고유 식별자",
+            "example": "c3d4e5f6-a7b8-9012-cdef-123456789012"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "소유 사용자 ID",
+            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "분류 카테고리 ID. 카테고리 미지정 또는 카테고리 삭제 시 null",
+            "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "할일 제목 (필수, 최대 255자)",
+            "example": "OpenAPI 스펙 작성"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "할일 상세 내용 (선택)",
+            "example": "swagger.json 파일을 작성하고 저장한다."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "COMPLETED"],
+            "description": "할일 상태. PENDING(미완료, 기본값) 또는 COMPLETED(완료)",
+            "example": "PENDING"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "완료 예정 일시 (ISO 8601, 선택). 현재 시각 이전이고 PENDING이면 Overdue 상태",
+            "example": "2026-04-30T18:00:00.000Z"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "완료 처리 일시 (ISO 8601). COMPLETED 전환 시 자동 기록, PENDING 복구 시 null",
+            "example": "2026-04-28T15:30:00.000Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "할일 생성 일시 (ISO 8601)",
+            "example": "2026-04-28T09:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "할일 최종 수정 일시 (ISO 8601)",
+            "example": "2026-04-28T12:00:00.000Z"
+          }
+        },
+        "required": ["id", "userId", "categoryId", "title", "status", "dueDate", "completedAt", "createdAt", "updatedAt"]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "표준 에러 응답 형식",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "기계가 처리 가능한 에러 코드",
+                "example": "VALIDATION_ERROR"
+              },
+              "message": {
+                "type": "string",
+                "description": "사람이 읽을 수 있는 에러 메시지",
+                "example": "제목은 필수 항목입니다."
+              }
+            },
+            "required": ["code", "message"]
+          }
+        },
+        "required": ["error"]
+      },
+      "MessageResponse": {
+        "type": "object",
+        "description": "단순 메시지 응답",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "처리 결과 메시지",
+            "example": "처리가 완료되었습니다."
+          }
+        },
+        "required": ["message"]
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "인증 토큰이 없거나 유효하지 않습니다.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "UNAUTHORIZED",
+                "message": "유효한 인증 토큰이 필요합니다."
+              }
+            }
+          }
+        }
+      },
+      "ForbiddenError": {
+        "description": "해당 리소스에 대한 접근 권한이 없습니다.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "FORBIDDEN",
+                "message": "이 리소스에 접근할 권한이 없습니다."
+              }
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "요청한 리소스를 찾을 수 없습니다.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "NOT_FOUND",
+                "message": "요청한 리소스를 찾을 수 없습니다."
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "서버 내부 오류가 발생했습니다.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "INTERNAL_ERROR",
+                "message": "서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "operationId": "registerUser",
+        "summary": "회원가입",
+        "description": "이메일과 비밀번호로 새 계정을 생성합니다. (FR-AUTH-01)\n\n**비즈니스 규칙:**\n- 이메일은 시스템 내 유일해야 합니다 (BR-AUTH-02).\n- 비밀번호는 최소 8자 이상이어야 합니다.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "가입할 이메일 주소",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "description": "비밀번호 (최소 8자)",
+                    "example": "password123!"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "회원가입 성공. 생성된 사용자 정보를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  },
+                  "required": ["user"]
+                },
+                "example": {
+                  "user": {
+                    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "email": "user@example.com",
+                    "createdAt": "2026-04-28T09:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "입력값 유효성 오류 (이메일 형식 오류, 비밀번호 8자 미만 등)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "비밀번호는 최소 8자 이상이어야 합니다."
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "이미 등록된 이메일 주소입니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "DUPLICATE_EMAIL",
+                    "message": "이미 사용 중인 이메일입니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "operationId": "loginUser",
+        "summary": "로그인",
+        "description": "이메일과 비밀번호로 인증하여 JWT 액세스 토큰을 발급받습니다. (FR-AUTH-02)\n\n발급된 토큰을 `Authorization: Bearer <token>` 헤더에 포함하여 보호된 API를 호출합니다.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "가입된 이메일 주소",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "비밀번호",
+                    "example": "password123!"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "로그인 성공. JWT 토큰과 사용자 정보를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "JWT 액세스 토큰 (HS-512 서명). Authorization 헤더에 Bearer 스킴으로 사용합니다.",
+                      "example": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhMWIyYzNkNC1lNWY2LTc4OTAtYWJjZC1lZjEyMzQ1Njc4OTAiLCJpYXQiOjE3NDU4MzIwMDB9.signature"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid",
+                          "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "example": "user@example.com"
+                        }
+                      },
+                      "required": ["id", "email"]
+                    }
+                  },
+                  "required": ["token", "user"]
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhMWIyYzNkNC1lNWY2LTc4OTAtYWJjZC1lZjEyMzQ1Njc4OTAiLCJpYXQiOjE3NDU4MzIwMDB9.signature",
+                  "user": {
+                    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "email": "user@example.com"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "이메일 또는 비밀번호가 일치하지 않습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "INVALID_CREDENTIALS",
+                    "message": "이메일 또는 비밀번호가 올바르지 않습니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "operationId": "logoutUser",
+        "summary": "로그아웃",
+        "description": "현재 세션을 종료합니다. (FR-AUTH-03)\n\n클라이언트 측에서 보관 중인 JWT 토큰을 폐기하도록 안내합니다.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "로그아웃 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                },
+                "example": {
+                  "message": "로그아웃되었습니다."
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/auth/account": {
+      "delete": {
+        "tags": ["Auth"],
+        "operationId": "deleteAccount",
+        "summary": "회원탈퇴",
+        "description": "계정 및 모든 관련 데이터를 영구 삭제합니다. (FR-AUTH-04)\n\n**경고:** 이 작업은 되돌릴 수 없습니다. (BR-AUTH-04)\n- 사용자 계정이 삭제됩니다.\n- 해당 사용자의 모든 카테고리가 즉시 영구 삭제됩니다.\n- 해당 사용자의 모든 할일이 즉시 영구 삭제됩니다.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원탈퇴 성공. 모든 관련 데이터가 삭제되었습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                },
+                "example": {
+                  "message": "계정이 성공적으로 삭제되었습니다."
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/auth/password": {
+      "patch": {
+        "tags": ["Auth"],
+        "operationId": "changePassword",
+        "summary": "비밀번호 변경",
+        "description": "현재 비밀번호를 확인한 후 새 비밀번호로 변경합니다. (FR-AUTH-05)\n\n**유효성 검사:**\n- 현재 비밀번호가 일치해야 합니다.\n- 새 비밀번호는 최소 8자 이상이어야 합니다.\n- 새 비밀번호와 현재 비밀번호가 달라야 합니다.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "description": "현재 비밀번호",
+                    "example": "password123!"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "minLength": 8,
+                    "description": "새 비밀번호 (최소 8자, 현재 비밀번호와 달라야 함)",
+                    "example": "newpassword456!"
+                  }
+                },
+                "required": ["currentPassword", "newPassword"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "비밀번호 변경 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                },
+                "example": {
+                  "message": "비밀번호가 성공적으로 변경되었습니다."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "새 비밀번호 유효성 오류 (8자 미만, 현재 비밀번호와 동일)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "tooShort": {
+                    "summary": "비밀번호 8자 미만",
+                    "value": {
+                      "error": {
+                        "code": "VALIDATION_ERROR",
+                        "message": "새 비밀번호는 최소 8자 이상이어야 합니다."
+                      }
+                    }
+                  },
+                  "sameAsCurrent": {
+                    "summary": "현재 비밀번호와 동일",
+                    "value": {
+                      "error": {
+                        "code": "VALIDATION_ERROR",
+                        "message": "새 비밀번호는 현재 비밀번호와 달라야 합니다."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "현재 비밀번호가 일치하지 않거나 인증 토큰이 유효하지 않습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "wrongPassword": {
+                    "summary": "현재 비밀번호 불일치",
+                    "value": {
+                      "error": {
+                        "code": "INVALID_CREDENTIALS",
+                        "message": "현재 비밀번호가 올바르지 않습니다."
+                      }
+                    }
+                  },
+                  "unauthorized": {
+                    "summary": "인증 토큰 없음/만료",
+                    "value": {
+                      "error": {
+                        "code": "UNAUTHORIZED",
+                        "message": "유효한 인증 토큰이 필요합니다."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/todos": {
+      "get": {
+        "tags": ["Todo"],
+        "operationId": "getTodos",
+        "summary": "할일 목록 조회",
+        "description": "로그인한 사용자의 할일 목록을 조회합니다. (FR-TODO-02)\n\n`status` 또는 `categoryId` 쿼리 파라미터로 결과를 필터링할 수 있습니다.\n\n**비즈니스 규칙:**\n- `dueDate`가 현재 시각 이전이고 상태가 `PENDING`인 할일은 Overdue 상태입니다 (BR-TODO-03).",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "할일 상태 필터. 지정하지 않으면 전체 상태를 반환합니다.",
+            "schema": {
+              "type": "string",
+              "enum": ["PENDING", "COMPLETED"]
+            },
+            "example": "PENDING"
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "required": false,
+            "description": "카테고리 ID 필터 (UUID). 지정하지 않으면 전체 카테고리를 반환합니다.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "할일 목록 조회 성공. 필터 조건에 맞는 할일 배열을 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "todos": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Todo"
+                      }
+                    }
+                  },
+                  "required": ["todos"]
+                },
+                "example": {
+                  "todos": [
+                    {
+                      "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                      "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "categoryId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                      "title": "OpenAPI 스펙 작성",
+                      "description": "swagger.json 파일을 작성하고 저장한다.",
+                      "status": "PENDING",
+                      "dueDate": "2026-04-30T18:00:00.000Z",
+                      "completedAt": null,
+                      "createdAt": "2026-04-28T09:00:00.000Z",
+                      "updatedAt": "2026-04-28T09:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Todo"],
+        "operationId": "createTodo",
+        "summary": "할일 생성",
+        "description": "새 할일을 생성합니다. (FR-TODO-01)\n\n**비즈니스 규칙:**\n- `title`은 필수이며 공백만으로 구성될 수 없습니다.\n- 생성 시 `status`는 자동으로 `PENDING`으로 설정됩니다 (BR-TODO-01).\n- `categoryId`를 지정하면 해당 카테고리로 분류됩니다 (본인 소유 카테고리만 가능).",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "할일 제목 (필수, 최대 255자, 공백만으로 구성 불가)",
+                    "example": "OpenAPI 스펙 작성"
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "할일 상세 내용 (선택)",
+                    "example": "swagger.json 파일을 작성하고 저장한다."
+                  },
+                  "categoryId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true,
+                    "description": "분류할 카테고리 ID (선택, 본인 소유 카테고리만 가능)",
+                    "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true,
+                    "description": "완료 예정 일시 (선택, ISO 8601)",
+                    "example": "2026-04-30T18:00:00.000Z"
+                  }
+                },
+                "required": ["title"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "할일 생성 성공. 생성된 할일 정보를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "todo": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  },
+                  "required": ["todo"]
+                },
+                "example": {
+                  "todo": {
+                    "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                    "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "categoryId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    "title": "OpenAPI 스펙 작성",
+                    "description": "swagger.json 파일을 작성하고 저장한다.",
+                    "status": "PENDING",
+                    "dueDate": "2026-04-30T18:00:00.000Z",
+                    "completedAt": null,
+                    "createdAt": "2026-04-28T09:00:00.000Z",
+                    "updatedAt": "2026-04-28T09:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "입력값 유효성 오류 (제목 누락 또는 공백)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "할일 제목은 필수 항목입니다."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/todos/{id}": {
+      "get": {
+        "tags": ["Todo"],
+        "operationId": "getTodoById",
+        "summary": "할일 상세 조회",
+        "description": "특정 할일의 상세 정보를 조회합니다. (FR-TODO-03)\n\n**비즈니스 규칙:**\n- 본인 소유의 할일만 조회할 수 있습니다 (BR-AUTH-03).",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "조회할 할일의 UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "c3d4e5f6-a7b8-9012-cdef-123456789012"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "할일 상세 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "todo": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  },
+                  "required": ["todo"]
+                },
+                "example": {
+                  "todo": {
+                    "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                    "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "categoryId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    "title": "OpenAPI 스펙 작성",
+                    "description": "swagger.json 파일을 작성하고 저장한다.",
+                    "status": "PENDING",
+                    "dueDate": "2026-04-30T18:00:00.000Z",
+                    "completedAt": null,
+                    "createdAt": "2026-04-28T09:00:00.000Z",
+                    "updatedAt": "2026-04-28T09:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "description": "해당 ID의 할일을 찾을 수 없습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "NOT_FOUND",
+                    "message": "해당 할일을 찾을 수 없습니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Todo"],
+        "operationId": "updateTodo",
+        "summary": "할일 수정",
+        "description": "할일의 제목, 설명, 카테고리, 종료일을 수정합니다. (FR-TODO-04)\n\n**비즈니스 규칙:**\n- 본인 소유의 할일만 수정할 수 있습니다 (BR-AUTH-03).\n- `title`은 필수이며 공백만으로 구성될 수 없습니다.\n- 상태(`status`) 변경은 이 엔드포인트를 사용하지 않으며, `PATCH /api/todos/{id}/status`를 사용합니다.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "수정할 할일의 UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "c3d4e5f6-a7b8-9012-cdef-123456789012"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "수정할 할일 제목 (필수, 최대 255자, 공백만으로 구성 불가)",
+                    "example": "OpenAPI 스펙 작성 및 검토"
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "수정할 상세 내용 (선택, null 전달 시 삭제)",
+                    "example": "swagger.json 작성 후 팀 리뷰를 진행한다."
+                  },
+                  "categoryId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true,
+                    "description": "수정할 카테고리 ID (선택, null 전달 시 카테고리 해제)",
+                    "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true,
+                    "description": "수정할 완료 예정 일시 (선택, ISO 8601, null 전달 시 삭제)",
+                    "example": "2026-05-01T18:00:00.000Z"
+                  }
+                },
+                "required": ["title"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "할일 수정 성공. 수정된 할일 정보를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "todo": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  },
+                  "required": ["todo"]
+                },
+                "example": {
+                  "todo": {
+                    "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                    "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "categoryId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    "title": "OpenAPI 스펙 작성 및 검토",
+                    "description": "swagger.json 작성 후 팀 리뷰를 진행한다.",
+                    "status": "PENDING",
+                    "dueDate": "2026-05-01T18:00:00.000Z",
+                    "completedAt": null,
+                    "createdAt": "2026-04-28T09:00:00.000Z",
+                    "updatedAt": "2026-04-28T14:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "입력값 유효성 오류 (제목 누락 또는 공백)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "할일 제목은 필수 항목입니다."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "description": "해당 ID의 할일을 찾을 수 없습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "NOT_FOUND",
+                    "message": "해당 할일을 찾을 수 없습니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Todo"],
+        "operationId": "deleteTodo",
+        "summary": "할일 삭제",
+        "description": "할일을 영구 삭제합니다. (FR-TODO-06)\n\n**비즈니스 규칙:**\n- 본인 소유의 할일만 삭제할 수 있습니다 (BR-AUTH-03).\n- 삭제된 할일은 복구할 수 없습니다.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "삭제할 할일의 UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "c3d4e5f6-a7b8-9012-cdef-123456789012"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "할일 삭제 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                },
+                "example": {
+                  "message": "할일이 성공적으로 삭제되었습니다."
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "description": "해당 ID의 할일을 찾을 수 없습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "NOT_FOUND",
+                    "message": "해당 할일을 찾을 수 없습니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/todos/{id}/status": {
+      "patch": {
+        "tags": ["Todo"],
+        "operationId": "updateTodoStatus",
+        "summary": "할일 상태 변경",
+        "description": "할일의 완료 상태를 변경합니다. (FR-TODO-05)\n\n**비즈니스 규칙 (BR-TODO-02):**\n- `COMPLETED`로 변경 시 `completedAt`에 현재 시각이 자동 기록됩니다.\n- `PENDING`으로 복구 시 `completedAt`이 `null`로 초기화됩니다.\n- 본인 소유의 할일만 상태를 변경할 수 있습니다 (BR-AUTH-03).",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "상태를 변경할 할일의 UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "c3d4e5f6-a7b8-9012-cdef-123456789012"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": ["PENDING", "COMPLETED"],
+                    "description": "변경할 상태값. PENDING(미완료로 복구) 또는 COMPLETED(완료 처리)",
+                    "example": "COMPLETED"
+                  }
+                },
+                "required": ["status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "할일 상태 변경 성공. 변경된 할일 정보를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "todo": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  },
+                  "required": ["todo"]
+                },
+                "examples": {
+                  "completed": {
+                    "summary": "COMPLETED로 변경",
+                    "value": {
+                      "todo": {
+                        "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                        "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "categoryId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                        "title": "OpenAPI 스펙 작성",
+                        "description": "swagger.json 파일을 작성하고 저장한다.",
+                        "status": "COMPLETED",
+                        "dueDate": "2026-04-30T18:00:00.000Z",
+                        "completedAt": "2026-04-28T15:30:00.000Z",
+                        "createdAt": "2026-04-28T09:00:00.000Z",
+                        "updatedAt": "2026-04-28T15:30:00.000Z"
+                      }
+                    }
+                  },
+                  "pending": {
+                    "summary": "PENDING으로 복구",
+                    "value": {
+                      "todo": {
+                        "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+                        "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                        "categoryId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                        "title": "OpenAPI 스펙 작성",
+                        "description": "swagger.json 파일을 작성하고 저장한다.",
+                        "status": "PENDING",
+                        "dueDate": "2026-04-30T18:00:00.000Z",
+                        "completedAt": null,
+                        "createdAt": "2026-04-28T09:00:00.000Z",
+                        "updatedAt": "2026-04-28T16:00:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "유효하지 않은 상태값입니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "status는 PENDING 또는 COMPLETED 중 하나여야 합니다."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "description": "해당 ID의 할일을 찾을 수 없습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "NOT_FOUND",
+                    "message": "해당 할일을 찾을 수 없습니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": ["Category"],
+        "operationId": "getCategories",
+        "summary": "카테고리 목록 조회",
+        "description": "로그인한 사용자의 카테고리 목록을 전체 조회합니다. (FR-CAT-02)",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "카테고리 목록 조회 성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Category"
+                      }
+                    }
+                  },
+                  "required": ["categories"]
+                },
+                "example": {
+                  "categories": [
+                    {
+                      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                      "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "name": "업무",
+                      "createdAt": "2026-04-28T09:00:00.000Z"
+                    },
+                    {
+                      "id": "d4e5f6a7-b8c9-0123-defg-234567890123",
+                      "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                      "name": "일상",
+                      "createdAt": "2026-04-28T09:05:00.000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Category"],
+        "operationId": "createCategory",
+        "summary": "카테고리 생성",
+        "description": "새 카테고리를 생성합니다. (FR-CAT-01)\n\n**비즈니스 규칙:**\n- 동일 사용자 내에서 카테고리명은 중복될 수 없습니다 (BR-CAT-01).\n- 카테고리명은 최대 100자이며 공백만으로 구성될 수 없습니다.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "카테고리명 (필수, 최대 100자, 공백만으로 구성 불가, 사용자 내 중복 불가)",
+                    "example": "업무"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "카테고리 생성 성공. 생성된 카테고리 정보를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "$ref": "#/components/schemas/Category"
+                    }
+                  },
+                  "required": ["category"]
+                },
+                "example": {
+                  "category": {
+                    "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "name": "업무",
+                    "createdAt": "2026-04-28T09:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "입력값 유효성 오류 (이름 누락 또는 공백)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "카테고리 이름은 필수 항목입니다."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "409": {
+            "description": "동일 사용자 내에 이미 같은 이름의 카테고리가 존재합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "DUPLICATE_NAME",
+                    "message": "이미 사용 중인 카테고리 이름입니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/api/categories/{id}": {
+      "put": {
+        "tags": ["Category"],
+        "operationId": "updateCategory",
+        "summary": "카테고리 수정",
+        "description": "카테고리명을 수정합니다. (FR-CAT-03)\n\n**비즈니스 규칙:**\n- 본인 소유의 카테고리만 수정할 수 있습니다 (BR-AUTH-03).\n- 변경하려는 이름이 같은 사용자의 다른 카테고리와 중복되면 수정이 실패합니다 (BR-CAT-01).",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "수정할 카테고리의 UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "수정할 카테고리명 (필수, 최대 100자, 공백만으로 구성 불가, 사용자 내 중복 불가)",
+                    "example": "개인 업무"
+                  }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "카테고리 수정 성공. 수정된 카테고리 정보를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "$ref": "#/components/schemas/Category"
+                    }
+                  },
+                  "required": ["category"]
+                },
+                "example": {
+                  "category": {
+                    "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    "userId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "name": "개인 업무",
+                    "createdAt": "2026-04-28T09:00:00.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "입력값 유효성 오류 (이름 누락 또는 공백)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "카테고리 이름은 필수 항목입니다."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "description": "해당 ID의 카테고리를 찾을 수 없습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "NOT_FOUND",
+                    "message": "해당 카테고리를 찾을 수 없습니다."
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "변경하려는 이름의 카테고리가 이미 존재합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "DUPLICATE_NAME",
+                    "message": "이미 사용 중인 카테고리 이름입니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Category"],
+        "operationId": "deleteCategory",
+        "summary": "카테고리 삭제",
+        "description": "카테고리를 영구 삭제합니다. (FR-CAT-04)\n\n**비즈니스 규칙 (BR-CAT-02):**\n- 본인 소유의 카테고리만 삭제할 수 있습니다 (BR-AUTH-03).\n- 해당 카테고리에 속한 할일들은 삭제되지 않으며, `categoryId`가 `null`로 자동 변경됩니다.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "삭제할 카테고리의 UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "카테고리 삭제 성공. 연결된 할일의 categoryId는 null로 변경됩니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                },
+                "example": {
+                  "message": "카테고리가 성공적으로 삭제되었습니다."
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "description": "해당 ID의 카테고리를 찾을 수 없습니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "NOT_FOUND",
+                    "message": "해당 카테고리를 찾을 수 없습니다."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  }
+}
