@@ -1,0 +1,32 @@
+- generic [ref=e198]:
+  - banner [ref=e199]:
+    - button "← 뒤로" [ref=e200]:
+      - generic [ref=e201]: ←
+      - generic [ref=e202]: 뒤로
+    - generic [ref=e203]: "|"
+    - heading "할일 수정" [level=1] [ref=e204]
+  - main [ref=e205]:
+    - generic [ref=e206]:
+      - generic [ref=e207]: PENDING
+      - button "완료로 변경" [ref=e208]
+    - generic [ref=e209]:
+      - generic [ref=e210]:
+        - generic [ref=e211]: 제목 *
+        - textbox "제목 *" [ref=e212]:
+          - /placeholder: 할일 제목을 입력하세요
+          - text: 테스트 할일 (기한초과)
+      - generic [ref=e213]:
+        - generic [ref=e214]: 설명
+        - textbox "설명" [ref=e215]:
+          - /placeholder: 설명을 입력하세요 (선택)
+      - generic [ref=e216]:
+        - generic [ref=e217]: 카테고리
+        - combobox "카테고리" [ref=e218]:
+          - option "카테고리 없음"
+          - option "업무" [selected]
+      - generic [ref=e219]:
+        - generic [ref=e220]: 종료일
+        - textbox "종료일" [ref=e221]: 2026-01-01T12:00
+      - paragraph [ref=e222]: "생성일: 2026-04-29 15:08"
+      - button "변경 저장" [ref=e223]
+      - button "이 할일 삭제" [ref=e224]

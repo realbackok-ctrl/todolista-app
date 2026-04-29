@@ -1,0 +1,89 @@
+{
+  "common": {
+    "todo": "할일",
+    "category": "카테고리",
+    "account": "계정",
+    "logout": "로그아웃",
+    "add": "추가",
+    "edit": "수정",
+    "delete": "삭제",
+    "confirm": "확인",
+    "cancel": "취소",
+    "back": "뒤로",
+    "save": "저장",
+    "loading": "로딩 중..."
+  },
+  "auth": {
+    "login": "로그인",
+    "register": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "noAccount": "계정이 없으신가요?",
+    "hasAccount": "이미 계정이 있으신가요?",
+    "createAccount": "새 계정 만들기",
+    "passwordHint": "최소 8자 이상 입력하세요",
+    "emailPlaceholder": "이메일을 입력하세요",
+    "passwordPlaceholder": "비밀번호를 입력하세요",
+    "confirmPasswordPlaceholder": "비밀번호를 다시 입력하세요"
+  },
+  "todo": {
+    "listTitle": "할일 목록",
+    "empty": "등록된 할일이 없습니다.",
+    "addHint": "+ 버튼을 눌러 할일을 추가해 보세요.",
+    "overdue": "기한 초과",
+    "status": {
+      "all": "전체",
+      "pending": "미완료",
+      "completed": "완료"
+    },
+    "categoryFilter": "전체 카테고리",
+    "form": {
+      "newTitle": "새 할일 추가",
+      "editTitle": "할일 수정",
+      "titleLabel": "제목 *",
+      "titlePlaceholder": "할일 제목을 입력하세요",
+      "descLabel": "설명",
+      "descPlaceholder": "설명을 입력하세요 (선택)",
+      "categoryLabel": "카테고리",
+      "noCategory": "카테고리 없음",
+      "dueDateLabel": "종료일",
+      "createdAtLabel": "생성일",
+      "deleteConfirm": "이 할일을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.",
+      "saveSuccess": "변경 사항이 저장되었습니다."
+    }
+  },
+  "category": {
+    "manageTitle": "카테고리 관리",
+    "addPlaceholder": "새 카테고리 이름",
+    "myCategories": "내 카테고리",
+    "empty": "카테고리가 없습니다. 위에서 새 카테고리를 추가해 보세요.",
+    "deleteConfirm": "이 카테고리를 삭제하면 연결된 할일의 카테고리 정보가 제거됩니다. 계속하시겠습니까?",
+    "duplicateError": "이미 사용 중인 카테고리 이름입니다.",
+    "requiredError": "카테고리 이름을 입력해 주세요."
+  },
+  "account": {
+    "settings": "계정 설정",
+    "myInfo": "내 정보",
+    "changePassword": "비밀번호 변경",
+    "currentPassword": "현재 비밀번호",
+    "newPassword": "새 비밀번호",
+    "newPasswordConfirm": "새 비밀번호 확인",
+    "currentPasswordPlaceholder": "현재 비밀번호 입력",
+    "newPasswordPlaceholder": "새 비밀번호 입력 (최소 8자)",
+    "newPasswordConfirmPlaceholder": "새 비밀번호 다시 입력",
+    "withdraw": "회원탈퇴",
+    "withdrawHint": "탈퇴 시 계정과 모든 데이터(할일, 카테고리)가 영구적으로 삭제됩니다.",
+    "withdrawConfirm": "계정과 모든 데이터(할일, 카테고리)가 영구 삭제됩니다. 탈퇴하시겠습니까?",
+    "passwordChanged": "비밀번호가 변경되었습니다."
+  },
+  "error": {
+    "emailInvalid": "이메일 형식이 올바르지 않습니다",
+    "passwordTooShort": "비밀번호는 최소 8자 이상이어야 합니다",
+    "passwordMismatch": "비밀번호가 일치하지 않습니다",
+    "loginFailed": "이메일 또는 비밀번호가 올바르지 않습니다",
+    "emailDuplicate": "이미 사용 중인 이메일입니다",
+    "fetchFailed": "데이터를 불러오지 못했습니다.",
+    "generic": "오류가 발생했습니다. 다시 시도해 주세요."
+  }
+}

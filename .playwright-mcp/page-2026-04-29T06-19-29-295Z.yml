@@ -1,0 +1,40 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "계정 설정" [level=1] [ref=e5]
+  - main [ref=e6]:
+    - generic [ref=e7]:
+      - paragraph [ref=e8]: 이메일
+      - paragraph [ref=e9]: fe14_test_2@example.com
+    - generic [ref=e10]:
+      - heading "비밀번호 변경" [level=2] [ref=e11]
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: 현재 비밀번호
+          - textbox "현재 비밀번호" [ref=e15]:
+            - /placeholder: 현재 비밀번호 입력
+        - generic [ref=e16]:
+          - generic [ref=e17]: 새 비밀번호
+          - textbox "새 비밀번호" [ref=e18]:
+            - /placeholder: 새 비밀번호 입력 (최소 8자)
+        - generic [ref=e19]:
+          - generic [ref=e20]: 새 비밀번호 확인
+          - textbox "새 비밀번호 확인" [ref=e21]:
+            - /placeholder: 새 비밀번호 다시 입력
+        - button "비밀번호 변경" [ref=e22]
+    - generic [ref=e23]:
+      - heading "회원탈퇴" [level=2] [ref=e24]
+      - paragraph [ref=e25]: 탈퇴 시 계정과 모든 데이터(할일, 카테고리)가 영구적으로 삭제됩니다.
+      - button "회원탈퇴" [ref=e26]
+  - navigation [ref=e27]:
+    - link "할일" [ref=e28] [cursor=pointer]:
+      - /url: /todos
+      - img [ref=e29]
+      - generic [ref=e31]: 할일
+    - link "카테고리" [ref=e32] [cursor=pointer]:
+      - /url: /categories
+      - img [ref=e33]
+      - generic [ref=e35]: 카테고리
+    - link "계정" [ref=e36] [cursor=pointer]:
+      - /url: /account
+      - img [ref=e37]
+      - generic [ref=e39]: 계정

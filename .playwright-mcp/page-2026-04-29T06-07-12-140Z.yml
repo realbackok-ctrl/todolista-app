@@ -1,0 +1,26 @@
+- generic [ref=e133]:
+  - banner [ref=e134]:
+    - button "← 뒤로" [ref=e135]:
+      - generic [ref=e136]: ←
+      - generic [ref=e137]: 뒤로
+    - generic [ref=e138]: "|"
+    - heading "새 할일 추가" [level=1] [ref=e139]
+  - main [ref=e140]:
+    - generic [ref=e141]:
+      - generic [ref=e142]:
+        - generic [ref=e143]: 제목 *
+        - textbox "제목 *" [ref=e144]:
+          - /placeholder: 할일 제목을 입력하세요
+      - generic [ref=e145]:
+        - generic [ref=e146]: 설명
+        - textbox "설명" [ref=e147]:
+          - /placeholder: 설명을 입력하세요 (선택)
+      - generic [ref=e148]:
+        - generic [ref=e149]: 카테고리
+        - combobox "카테고리" [ref=e150]:
+          - option "카테고리 없음" [selected]
+          - option "업무"
+      - generic [ref=e151]:
+        - generic [ref=e152]: 종료일
+        - textbox "종료일" [ref=e153]
+      - button "할일 추가" [ref=e154]

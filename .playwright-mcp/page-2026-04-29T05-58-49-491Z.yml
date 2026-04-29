@@ -1,0 +1,24 @@
+- generic [ref=e71]:
+  - banner [ref=e72]:
+    - heading "카테고리 관리" [level=1] [ref=e73]
+  - main [ref=e74]:
+    - generic [ref=e75]:
+      - textbox "새 카테고리 이름" [ref=e78]
+      - button "추가" [ref=e79]
+    - separator [ref=e80]
+    - generic [ref=e81]:
+      - paragraph [ref=e82]: 카테고리가 없습니다.
+      - paragraph [ref=e83]: 위에서 새 카테고리를 추가해 보세요.
+  - navigation [ref=e84]:
+    - link "할일" [ref=e85] [cursor=pointer]:
+      - /url: /todos
+      - img [ref=e86]
+      - generic [ref=e88]: 할일
+    - link "카테고리" [ref=e89] [cursor=pointer]:
+      - /url: /categories
+      - img [ref=e90]
+      - generic [ref=e92]: 카테고리
+    - link "계정" [ref=e93] [cursor=pointer]:
+      - /url: /account
+      - img [ref=e94]
+      - generic [ref=e96]: 계정

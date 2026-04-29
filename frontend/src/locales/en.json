@@ -1,0 +1,89 @@
+{
+  "common": {
+    "todo": "Todo",
+    "category": "Category",
+    "account": "Account",
+    "logout": "Logout",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "back": "Back",
+    "save": "Save",
+    "loading": "Loading..."
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "createAccount": "Create New Account",
+    "passwordHint": "Enter at least 8 characters",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPasswordPlaceholder": "Re-enter your password"
+  },
+  "todo": {
+    "listTitle": "Todo List",
+    "empty": "No todos registered.",
+    "addHint": "Click the + button to add a todo.",
+    "overdue": "Overdue",
+    "status": {
+      "all": "All",
+      "pending": "Pending",
+      "completed": "Completed"
+    },
+    "categoryFilter": "All Categories",
+    "form": {
+      "newTitle": "Add New Todo",
+      "editTitle": "Edit Todo",
+      "titleLabel": "Title *",
+      "titlePlaceholder": "Enter todo title",
+      "descLabel": "Description",
+      "descPlaceholder": "Enter description (optional)",
+      "categoryLabel": "Category",
+      "noCategory": "No Category",
+      "dueDateLabel": "Due Date",
+      "createdAtLabel": "Created At",
+      "deleteConfirm": "Are you sure you want to delete this todo? This action cannot be undone.",
+      "saveSuccess": "Changes have been saved."
+    }
+  },
+  "category": {
+    "manageTitle": "Manage Categories",
+    "addPlaceholder": "New Category Name",
+    "myCategories": "My Categories",
+    "empty": "No categories. Add a new one above.",
+    "deleteConfirm": "Deleting this category will remove category info from associated todos. Continue?",
+    "duplicateError": "Category name already in use.",
+    "requiredError": "Please enter a category name."
+  },
+  "account": {
+    "settings": "Account Settings",
+    "myInfo": "My Information",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "newPasswordConfirm": "Confirm New Password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "newPasswordPlaceholder": "Enter new password (min 8 chars)",
+    "newPasswordConfirmPlaceholder": "Re-enter new password",
+    "withdraw": "Withdraw",
+    "withdrawHint": "Upon withdrawal, your account and all data (todos, categories) will be permanently deleted.",
+    "withdrawConfirm": "Account and all data (todos, categories) will be permanently deleted. Proceed?",
+    "passwordChanged": "Password has been changed."
+  },
+  "error": {
+    "emailInvalid": "Invalid email format",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "passwordMismatch": "Passwords do not match",
+    "loginFailed": "Invalid email or password",
+    "emailDuplicate": "Email already in use",
+    "fetchFailed": "Failed to fetch data.",
+    "generic": "An error occurred. Please try again."
+  }
+}

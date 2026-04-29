@@ -1,0 +1,21 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "카테고리 관리" [level=1] [ref=e5]
+  - main [ref=e6]:
+    - generic [ref=e7]:
+      - textbox "새 카테고리 이름" [ref=e10]
+      - button "추가" [ref=e11]
+    - separator [ref=e12]
+  - navigation [ref=e15]:
+    - link "할일" [ref=e16] [cursor=pointer]:
+      - /url: /todos
+      - img [ref=e17]
+      - generic [ref=e19]: 할일
+    - link "카테고리" [ref=e20] [cursor=pointer]:
+      - /url: /categories
+      - img [ref=e21]
+      - generic [ref=e23]: 카테고리
+    - link "계정" [ref=e24] [cursor=pointer]:
+      - /url: /account
+      - img [ref=e25]
+      - generic [ref=e27]: 계정

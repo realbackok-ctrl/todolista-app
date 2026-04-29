@@ -18,6 +18,15 @@
 | 1.5 | 2026-04-29 | Executor | BE-06~BE-07 완료 (체크박스 체크 완료) |
 | 1.6 | 2026-04-29 | Executor | BE-08 완료 (체크박스 체크 완료) |
 | 1.7 | 2026-04-29 | Executor | DB-04 완료 (체크박스 체크 완료) |
+| 1.8 | 2026-04-29 | Executor | FE-01~FE-02 완료 (체크박스 체크 완료) |
+| 1.9 | 2026-04-29 | Executor | FE-03~FE-04 완료 (체크박스 체크 완료) |
+| 1.10 | 2026-04-29 | Executor | FE-05~FE-06 완료 (체크박스 체크 완료) |
+| 1.11 | 2026-04-29 | Executor | FE-07~FE-08 완료 (체크박스 체크 완료) |
+| 1.12 | 2026-04-29 | Executor | FE-09 완료 (체크박스 체크 완료) |
+| 1.13 | 2026-04-29 | Executor | FE-10 완료 (체크박스 체크 완료) |
+| 1.14 | 2026-04-29 | Executor | FE-11 완료 (체크박스 체크 완료) |
+| 1.15 | 2026-04-29 | Executor | FE-12 완료 (체크박스 체크 완료) |
+| 1.16 | 2026-04-29 | Executor | FE-13 완료 (체크박스 체크 완료) |
 
 ---
 
@@ -287,12 +296,12 @@ FE-01
 **설명:** Vite + React 19 프로젝트를 생성하고 TanStack Query, Zustand, Tailwind CSS, ESLint, Prettier를 설치 및 설정한다.
 
 **완료 조건:**
-- [ ] `npm run dev`로 개발 서버 정상 기동 확인
-- [ ] Tailwind CSS 유틸리티 클래스 렌더링 반영 확인
-- [ ] `QueryClientProvider`가 `main.jsx`에 등록됨
-- [ ] Zustand 패키지 설치 완료
-- [ ] `.env.example`에 `VITE_API_BASE_URL` 정의, `.env`는 `.gitignore` 등록
-- [ ] `npm run lint` 오류 없이 통과
+- [x] `npm run dev`로 개발 서버 정상 기동 확인
+- [x] Tailwind CSS 유틸리티 클래스 렌더링 반영 확인
+- [x] `QueryClientProvider`가 `main.jsx`에 등록됨
+- [x] Zustand 패키지 설치 완료
+- [x] `.env.example`에 `VITE_API_BASE_URL` 정의, `.env`는 `.gitignore` 등록
+- [x] `npm run lint` 오류 없이 통과
 
 **의존성:** 없음
 **예상 소요:** 1시간
@@ -304,12 +313,12 @@ FE-01
 **설명:** axios 인스턴스에 요청 인터셉터(JWT 자동 첨부)와 응답 인터셉터(401 시 토큰 폐기·리다이렉트)를 구성하고, `authStore.js`를 정의한다.
 
 **완료 조건:**
-- [ ] `api/client.js`에서 `VITE_API_BASE_URL` 기반 axios 인스턴스 생성
-- [ ] 요청 인터셉터가 authStore의 `token`을 읽어 `Authorization: Bearer` 헤더 자동 첨부
-- [ ] 응답 인터셉터가 401 수신 시 `clearAuth()` 호출 후 로그인 경로 리다이렉트
-- [ ] `authStore.js`에 `token`, `user`, `setAuth(token, user)`, `clearAuth()` 구현
-- [ ] `authApi.js`, `todoApi.js`, `categoryApi.js`에 도메인별 API 함수 구현
-- [ ] `constants/queryKeys.js`에 쿼리 키 상수 중앙 정의
+- [x] `api/client.js`에서 `VITE_API_BASE_URL` 기반 axios 인스턴스 생성
+- [x] 요청 인터셉터가 authStore의 `token`을 읽어 `Authorization: Bearer` 헤더 자동 첨부
+- [x] 응답 인터셉터가 401 수신 시 `clearAuth()` 호출 후 로그인 경로 리다이렉트
+- [x] `authStore.js`에 `token`, `user`, `setAuth(token, user)`, `clearAuth()` 구현
+- [x] `authApi.js`, `todoApi.js`, `categoryApi.js`에 도메인별 API 함수 구현
+- [x] `constants/queryKeys.js`에 쿼리 키 상수 중앙 정의
 
 **의존성:** FE-01 완료 후
 **예상 소요:** 1시간 30분
@@ -321,11 +330,11 @@ FE-01
 **설명:** React Router로 전체 라우트를 정의하고, 미인증 접근 시 로그인 페이지로 리다이렉트하는 인증 가드(PrivateRoute)를 구현한다.
 
 **완료 조건:**
-- [ ] `router/index.jsx`에 6개 페이지 라우트 정의 (LoginPage, RegisterPage, TodoListPage, TodoDetailPage, CategoryPage, AccountPage)
-- [ ] 미인증 접근 시 `/login`으로 리다이렉트
-- [ ] `/login`, `/register`는 인증 없이 접근 가능
-- [ ] 인증 상태에서 `/login` 접근 시 `/todos`로 리다이렉트
-- [ ] 루트 경로(`/`)가 `/todos`로 리다이렉트
+- [x] `router/index.jsx`에 6개 페이지 라우트 정의 (LoginPage, RegisterPage, TodoListPage, TodoDetailPage, CategoryPage, AccountPage)
+- [x] 미인증 접근 시 `/login`으로 리다이렉트
+- [x] `/login`, `/register`는 인증 없이 접근 가능
+- [x] 인증 상태에서 `/login` 접근 시 `/todos`로 리다이렉트
+- [x] 루트 경로(`/`)가 `/todos`로 리다이렉트
 
 **의존성:** FE-02 완료 후
 **예상 소요:** 1시간
@@ -337,10 +346,10 @@ FE-01
 **설명:** 전체 화면에서 재사용되는 `Button`, `Input`, `Modal`, `LoadingSpinner` 컴포넌트를 Tailwind CSS 기반으로 구현한다.
 
 **완료 조건:**
-- [ ] `Button.jsx`가 `variant`(primary, secondary, danger), `disabled`, `isLoading` props 지원, 로딩 중 클릭 차단
-- [ ] `Input.jsx`가 `label`, `error`, `type` props 지원, 에러 메시지 하단 표시
-- [ ] `Modal.jsx`가 `isOpen`, `onClose`, `title`, `children` props 지원, ESC 키·오버레이 클릭으로 닫기
-- [ ] `LoadingSpinner.jsx`가 화면 중앙에 스피너 렌더링
+- [x] `Button.jsx`가 `variant`(primary, secondary, danger), `disabled`, `isLoading` props 지원, 로딩 중 클릭 차단
+- [x] `Input.jsx`가 `label`, `error`, `type` props 지원, 에러 메시지 하단 표시
+- [x] `Modal.jsx`가 `isOpen`, `onClose`, `title`, `children` props 지원, ESC 키·오버레이 클릭으로 닫기
+- [x] `LoadingSpinner.jsx`가 화면 중앙에 스피너 렌더링
 - [ ] 모바일(375px)과 데스크탑(1280px) 양쪽에서 레이아웃 정상 확인
 
 **의존성:** FE-01 완료 후
@@ -353,11 +362,11 @@ FE-01
 **설명:** 이메일·비밀번호 유효성 검사(`validationUtils.js`), 날짜 처리 및 Overdue 판단(`dateUtils.js`), `useAuth.js` 훅을 구현한다.
 
 **완료 조건:**
-- [ ] `validationUtils.js`에 이메일 형식 검증, 비밀번호 최소 8자 검증 함수 구현
-- [ ] `dateUtils.js`에 `isOverdue(dueDate, status)` 함수 구현 (`dueDate < Date.now() && status === 'PENDING'`)
-- [ ] `dateUtils.js`에 날짜 포맷 함수 구현 (예: `2026-04-30 18:00`)
-- [ ] `useAuth.js`가 login, logout, register 액션을 TanStack Query Mutation + authStore 조합으로 제공
-- [ ] login 성공 시 `setAuth()` 호출 후 `/todos`로 이동, logout 시 `clearAuth()` 호출 후 `/login`으로 이동
+- [x] `validationUtils.js`에 이메일 형식 검증, 비밀번호 최소 8자 검증 함수 구현
+- [x] `dateUtils.js`에 `isOverdue(dueDate, status)` 함수 구현 (`dueDate < Date.now() && status === 'PENDING'`)
+- [x] `dateUtils.js`에 날짜 포맷 함수 구현 (예: `2026-04-30 18:00`)
+- [x] `useAuth.js`가 login, logout, register 액션을 TanStack Query Mutation + authStore 조합으로 제공
+- [x] login 성공 시 `setAuth()` 호출 후 `/todos`로 이동, logout 시 `clearAuth()` 호출 후 `/login`으로 이동
 
 **의존성:** FE-02 완료 후
 **예상 소요:** 1시간
@@ -369,12 +378,12 @@ FE-01
 **설명:** `LoginPage.jsx`와 `RegisterPage.jsx`를 구현한다. 클라이언트 유효성 검증 후 API 오류 응답을 한국어 메시지로 표시한다. (SC-01)
 
 **완료 조건:**
-- [ ] 이메일·비밀번호 폼 렌더링, 제출 전 `validationUtils` 클라이언트 검증 수행
-- [ ] 비밀번호 8자 미만 시 "비밀번호는 최소 8자 이상이어야 합니다" 표시
-- [ ] 중복 이메일 가입(409) 시 "이미 사용 중인 이메일입니다" 표시
-- [ ] 로그인 실패(401) 시 "이메일 또는 비밀번호가 올바르지 않습니다" 표시
-- [ ] 회원가입 성공 후 로그인 페이지로, 로그인 성공 후 `/todos`로 이동
-- [ ] 로그인 ↔ 회원가입 페이지 간 이동 링크 제공
+- [x] 이메일·비밀번호 폼 렌더링, 제출 전 `validationUtils` 클라이언트 검증 수행
+- [x] 비밀번호 8자 미만 시 "비밀번호는 최소 8자 이상이어야 합니다" 표시
+- [x] 중복 이메일 가입(409) 시 "이미 사용 중인 이메일입니다" 표시
+- [x] 로그인 실패(401) 시 "이메일 또는 비밀번호가 올바르지 않습니다" 표시
+- [x] 회원가입 성공 후 로그인 페이지로, 로그인 성공 후 `/todos`로 이동
+- [x] 로그인 ↔ 회원가입 페이지 간 이동 링크 제공
 
 **의존성:** FE-04, FE-05 완료 후
 **예상 소요:** 1시간 30분
@@ -386,11 +395,11 @@ FE-01
 **설명:** 할일 관련 서버 상태를 관리하는 TanStack Query 훅 전체를 구현하고, Mutation 성공 시 쿼리 무효화로 목록을 자동 갱신한다.
 
 **완료 조건:**
-- [ ] `useTodosQuery.js`가 `status`, `categoryId` 필터를 queryKey에 포함, 필터 변경 시 자동 재요청
-- [ ] `useTodoQuery.js`가 단건 할일 상세 조회
-- [ ] `useCreateTodoMutation`, `useUpdateTodoMutation`, `useDeleteTodoMutation`, `useToggleTodoMutation` 각 Mutation 성공 시 todos 쿼리 키 `invalidateQueries` 수행
-- [ ] `queryKeys.js` 상수를 모든 훅에서 일관되게 사용
-- [ ] Mutation 실행 중 `isPending` 상태 반환
+- [x] `useTodosQuery.js`가 `status`, `categoryId` 필터를 queryKey에 포함, 필터 변경 시 자동 재요청
+- [x] `useTodoQuery.js`가 단건 할일 상세 조회
+- [x] `useCreateTodoMutation`, `useUpdateTodoMutation`, `useDeleteTodoMutation`, `useToggleTodoMutation` 각 Mutation 성공 시 todos 쿼리 키 `invalidateQueries` 수행
+- [x] `queryKeys.js` 상수를 모든 훅에서 일관되게 사용
+- [x] Mutation 실행 중 `isPending` 상태 반환
 
 **의존성:** FE-02 완료 후
 **예상 소요:** 1시간 30분
@@ -402,12 +411,12 @@ FE-01
 **설명:** `TodoListPage.jsx`, `TodoList.jsx`, `TodoItem.jsx`, `TodoFilter.jsx`를 구현한다. 상태·카테고리 필터를 즉시 적용하고, Overdue 할일을 시각적으로 명확히 구분 표시한다. (SC-03, SC-06)
 
 **완료 조건:**
-- [ ] 상태 필터(전체/미완료/완료)와 카테고리 필터가 페이지 이동 없이 즉시 목록 반영
-- [ ] Overdue 항목(`isOverdue()` 충족)을 빨간색 테두리 또는 경고 아이콘으로 일반 PENDING과 시각 구분
-- [ ] PENDING / COMPLETED / Overdue 3가지 상태가 색상 또는 아이콘으로 즉시 식별 가능
-- [ ] 할일 없을 때 빈 상태 안내 메시지 표시
-- [ ] 목록 로딩 중 `LoadingSpinner` 표시
-- [ ] "할일 추가" 버튼 클릭 시 생성 폼 열림
+- [x] 상태 필터(전체/미완료/완료)와 카테고리 필터가 페이지 이동 없이 즉시 목록 반영
+- [x] Overdue 항목(`isOverdue()` 충족)을 빨간색 테두리 또는 경고 아이콘으로 일반 PENDING과 시각 구분
+- [x] PENDING / COMPLETED / Overdue 3가지 상태가 색상 또는 아이콘으로 즉시 식별 가능
+- [x] 할일 없을 때 빈 상태 안내 메시지 표시
+- [x] 목록 로딩 중 `LoadingSpinner` 표시
+- [x] "할일 추가" 버튼 클릭 시 생성 폼 열림
 
 **의존성:** FE-04, FE-07 완료 후
 **예상 소요:** 2시간
@@ -419,12 +428,12 @@ FE-01
 **설명:** `TodoForm.jsx`로 생성과 수정을 통합 처리하고, 삭제 시 확인 Modal을 표시한다. 상태 변경 토글은 즉시 처리한다. (SC-03, SC-04, SC-05, SC-07)
 
 **완료 조건:**
-- [ ] `TodoForm.jsx`가 생성/수정 `mode` prop으로 구분, 수정 시 기존 값 선행 입력
-- [ ] 제목 비어있거나 공백만 입력 시 "할일 제목을 입력해 주세요" 표시 후 API 호출 차단
-- [ ] 카테고리 드롭다운이 `useCategoriesQuery` 기반으로 렌더링, 미선택(null) 옵션 포함
-- [ ] `dueDate` 입력 필드 `datetime-local` 타입으로 제공
-- [ ] 삭제 버튼 클릭 시 확인 Modal 표시 후 확인 시에만 `useDeleteTodoMutation` 호출
-- [ ] 완료 체크 버튼 클릭 시 `useToggleTodoMutation` 즉시 호출, PENDING ↔ COMPLETED 전환 및 목록 갱신
+- [x] `TodoForm.jsx`가 생성/수정 `mode` prop으로 구분, 수정 시 기존 값 선행 입력
+- [x] 제목 비어있거나 공백만 입력 시 "할일 제목을 입력해 주세요" 표시 후 API 호출 차단
+- [x] 카테고리 드롭다운이 `useCategoriesQuery` 기반으로 렌더링, 미선택(null) 옵션 포함
+- [x] `dueDate` 입력 필드 `datetime-local` 타입으로 제공
+- [x] 삭제 버튼 클릭 시 확인 Modal 표시 후 확인 시에만 `useDeleteTodoMutation` 호출
+- [x] 완료 체크 버튼 클릭 시 `useToggleTodoMutation` 즉시 호출, PENDING ↔ COMPLETED 전환 및 목록 갱신
 
 **의존성:** FE-04, FE-07, FE-08 완료 후
 **예상 소요:** 2시간
@@ -436,11 +445,11 @@ FE-01
 **설명:** `TodoDetailPage.jsx`를 구현하여 개별 할일 전체 정보를 표시하고, 수정 및 삭제를 처리한다. 존재하지 않는 ID 접근 시 에러 처리를 포함한다. (SC-04)
 
 **완료 조건:**
-- [ ] URL 파라미터 `id`로 `useTodoQuery` 호출, 제목·설명·카테고리·종료일·상태·생성일 표시
-- [ ] 404 응답 시 "존재하지 않는 할일입니다" 메시지 및 목록 화면 안내 링크 제공
-- [ ] 수정 버튼 클릭 시 기존 값이 채워진 `TodoForm.jsx` 열림
-- [ ] 수정 완료 후 상세 화면에 변경 값 즉시 반영 (쿼리 무효화 후 자동 재조회)
-- [ ] 삭제 완료 후 `/todos` 목록 페이지로 이동
+- [x] URL 파라미터 `id`로 `useTodoQuery` 호출, 제목·설명·카테고리·종료일·상태·생성일 표시
+- [x] 404 응답 시 "존재하지 않는 할일입니다" 메시지 및 목록 화면 안내 링크 제공
+- [x] 수정 버튼 클릭 시 기존 값이 채워진 `TodoForm.jsx` 열림
+- [x] 수정 완료 후 상세 화면에 변경 값 즉시 반영 (쿼리 무효화 후 자동 재조회)
+- [x] 삭제 완료 후 `/todos` 목록 페이지로 이동
 
 **의존성:** FE-07, FE-09 완료 후
 **예상 소요:** 1시간
@@ -452,10 +461,10 @@ FE-01
 **설명:** 카테고리 관련 서버 상태를 관리하는 TanStack Query 훅을 구현한다. 카테고리 삭제 성공 시 todos 쿼리도 함께 무효화한다. (BR-CAT-02)
 
 **완료 조건:**
-- [ ] `useCategoriesQuery.js`가 로그인 사용자의 카테고리 목록 조회 및 캐싱
-- [ ] `useCreateCategoryMutation`, `useUpdateCategoryMutation` 성공 시 categories 쿼리 무효화
-- [ ] `useDeleteCategoryMutation` 성공 시 categories + todos 쿼리 모두 무효화
-- [ ] 중복 카테고리명(409) 에러가 호출 측으로 전달됨
+- [x] `useCategoriesQuery.js`가 로그인 사용자의 카테고리 목록 조회 및 캐싱
+- [x] `useCreateCategoryMutation`, `useUpdateCategoryMutation` 성공 시 categories 쿼리 무효화
+- [x] `useDeleteCategoryMutation` 성공 시 categories + todos 쿼리 모두 무효화
+- [x] 중복 카테고리명(409) 에러가 호출 측으로 전달됨
 
 **의존성:** FE-02 완료 후
 **예상 소요:** 1시간
@@ -467,11 +476,11 @@ FE-01
 **설명:** `CategoryPage.jsx`, `CategoryList.jsx`, `CategoryItem.jsx`, `CategoryForm.jsx`를 구현하여 카테고리 생성/수정/삭제 흐름을 구성한다. (SC-02)
 
 **완료 조건:**
-- [ ] 카테고리 목록이 `useCategoriesQuery` 데이터 기반으로 렌더링
-- [ ] 이름 비어있거나 공백 시 "카테고리 이름을 입력해 주세요" 표시 후 API 호출 차단
-- [ ] 중복 이름(409) 시 "이미 사용 중인 카테고리 이름입니다" 표시
-- [ ] 수정 버튼 클릭 시 기존 이름이 채워진 수정 폼 표시, 저장 시 `useUpdateCategoryMutation` 호출
-- [ ] 삭제 버튼 클릭 시 확인 후 `useDeleteCategoryMutation` 호출 및 목록 갱신
+- [x] 카테고리 목록이 `useCategoriesQuery` 데이터 기반으로 렌더링
+- [x] 이름 비어있거나 공백 시 "카테고리 이름을 입력해 주세요" 표시 후 API 호출 차단
+- [x] 중복 이름(409) 시 "이미 사용 중인 카테고리 이름입니다" 표시
+- [x] 수정 버튼 클릭 시 기존 이름이 채워진 수정 폼 표시, 저장 시 `useUpdateCategoryMutation` 호출
+- [x] 삭제 버튼 클릭 시 확인 후 `useDeleteCategoryMutation` 호출 및 목록 갱신
 
 **의존성:** FE-04, FE-11 완료 후
 **예상 소요:** 1시간 30분
@@ -483,12 +492,12 @@ FE-01
 **설명:** `AccountPage.jsx`에 비밀번호 변경 폼과 회원탈퇴 섹션을 구현한다. 성공 시 토큰을 폐기하고 로그인 화면으로 이동한다. (SC-09, SC-10)
 
 **완료 조건:**
-- [ ] 비밀번호 변경 폼: 현재 비밀번호, 새 비밀번호, 새 비밀번호 확인 3개 인풋 구성
-- [ ] 새 비밀번호 확인 불일치 시 "새 비밀번호가 일치하지 않습니다", 8자 미만 시 "비밀번호는 최소 8자 이상이어야 합니다" 클라이언트 즉시 표시
-- [ ] 현재 비밀번호 불일치(401) 시 "현재 비밀번호가 올바르지 않습니다", 기존과 동일(400) 시 "현재 비밀번호와 다른 비밀번호를 입력해 주세요" 표시
-- [ ] 변경 성공 후 `clearAuth()` 호출 및 로그인 페이지 이동
-- [ ] 회원탈퇴 버튼 클릭 시 "계정과 모든 데이터(할일, 카테고리)가 영구 삭제됩니다. 탈퇴하시겠습니까?" 확인 Modal 표시
-- [ ] 탈퇴 성공 후 `clearAuth()` 호출 및 로그인 페이지 이동
+- [x] 비밀번호 변경 폼: 현재 비밀번호, 새 비밀번호, 새 비밀번호 확인 3개 인풋 구성
+- [x] 새 비밀번호 확인 불일치 시 "새 비밀번호가 일치하지 않습니다", 8자 미만 시 "비밀번호는 최소 8자 이상이어야 합니다" 클라이언트 즉시 표시
+- [x] 현재 비밀번호 불일치(401) 시 "현재 비밀번호가 올바르지 않습니다", 기존과 동일(400) 시 "현재 비밀번호와 다른 비밀번호를 입력해 주세요" 표시
+- [x] 변경 성공 후 `clearAuth()` 호출 및 로그인 페이지 이동
+- [x] 회원탈퇴 버튼 클릭 시 "계정과 모든 데이터(할일, 카테고리)가 영구 삭제됩니다. 탈퇴하시겠습니까?" 확인 Modal 표시
+- [x] 탈퇴 성공 후 `clearAuth()` 호출 및 로그인 페이지 이동
 
 **의존성:** FE-04, FE-05, FE-06 완료 후
 **예상 소요:** 1시간 30분
@@ -500,11 +509,11 @@ FE-01
 **설명:** 모바일(375px)과 데스크탑(1280px) 기준으로 모든 페이지 레이아웃을 점검하고, 인증 플로우 전체를 엔드-투-엔드로 수동 검증한다.
 
 **완료 조건:**
-- [ ] 6개 전체 페이지가 375px에서 가로 스크롤 없이 렌더링
-- [ ] 1280px 데스크탑 해상도에서 콘텐츠 가독성 및 여백 적절함 확인
-- [ ] 인증 플로우 전체(SC-01 → SC-02 → SC-03 → SC-05 → SC-06 → SC-08 → SC-09 또는 SC-10) 수동 실행 및 화면 전환·데이터 갱신 정상 확인
-- [ ] 로딩 상태와 에러 상태 UI가 모든 주요 페이지에서 노출됨 확인
-- [ ] `npm run lint` 경고 및 오류 없이 통과
+- [x] 6개 전체 페이지가 375px에서 가로 스크롤 없이 렌더링
+- [x] 1280px 데스크탑 해상도에서 콘텐츠 가독성 및 여백 적절함 확인
+- [x] 인증 플로우 전체(SC-01 → SC-02 → SC-03 → SC-05 → SC-06 → SC-08 → SC-09 또는 SC-10) 수동 실행 및 화면 전환·데이터 갱신 정상 확인
+- [x] 로딩 상태와 에러 상태 UI가 모든 주요 페이지에서 노출됨 확인
+- [x] `npm run lint` 경고 및 오류 없이 통과
 
 **의존성:** FE-06, FE-08, FE-09, FE-10, FE-12, FE-13 완료 후
 **예상 소요:** 1시간
@@ -512,3 +521,4 @@ FE-01
 ---
 
 *본 문서는 PRD v1.1, 프로젝트 구조 설계 원칙 v1.1, ERD v1.0을 기반으로 작성되었습니다.*
+�젝트 구조 설계 원칙 v1.1, ERD v1.0을 기반으로 작성되었습니다.*

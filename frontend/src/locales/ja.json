@@ -1,0 +1,89 @@
+{
+  "common": {
+    "todo": "TODO",
+    "category": "カテゴリー",
+    "account": "アカウント",
+    "logout": "ログアウト",
+    "add": "追加",
+    "edit": "修正",
+    "delete": "削除",
+    "confirm": "確認",
+    "cancel": "キャンセル",
+    "back": "戻る",
+    "save": "保存",
+    "loading": "読み込み中..."
+  },
+  "auth": {
+    "login": "ログイン",
+    "register": "会員登録",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirmPassword": "パスワード確認",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "hasAccount": "既にアカウントをお持ちですか？",
+    "createAccount": "新規アカウント作成",
+    "passwordHint": "8文字以上で入力してください",
+    "emailPlaceholder": "メールアドレスを入力してください",
+    "passwordPlaceholder": "パスワードを入力してください",
+    "confirmPasswordPlaceholder": "パスワードをもう一度入力してください"
+  },
+  "todo": {
+    "listTitle": "TODOリスト",
+    "empty": "登録されたTODOがありません。",
+    "addHint": "+ボタンを押してTODOを追加してみてください。",
+    "overdue": "期限切れ",
+    "status": {
+      "all": "すべて",
+      "pending": "未完了",
+      "completed": "完了"
+    },
+    "categoryFilter": "すべてのカテゴリー",
+    "form": {
+      "newTitle": "新規TODO追加",
+      "editTitle": "TODO修正",
+      "titleLabel": "タイトル *",
+      "titlePlaceholder": "TODOのタイトルを入力してください",
+      "descLabel": "説明",
+      "descPlaceholder": "説明を入力してください（任意）",
+      "categoryLabel": "カテゴリー",
+      "noCategory": "カテゴリーなし",
+      "dueDateLabel": "終了予定日",
+      "createdAtLabel": "作成日",
+      "deleteConfirm": "このTODOを削除しますか？削除後は復元できません。",
+      "saveSuccess": "変更内容が保存されました。"
+    }
+  },
+  "category": {
+    "manageTitle": "カテゴリー管理",
+    "addPlaceholder": "新しいカテゴリー名",
+    "myCategories": "マイカテゴリー",
+    "empty": "カテゴリーがありません。上で新しいカテゴリーを追加してみてください。",
+    "deleteConfirm": "このカテゴリーを削除すると、関連するTODOのカテゴリー情報が削除されます。続行しますか？",
+    "duplicateError": "既に使用されているカテゴリー名です。",
+    "requiredError": "カテゴリー名を入力してください。"
+  },
+  "account": {
+    "settings": "アカウント設定",
+    "myInfo": "マイ情報",
+    "changePassword": "パスワード変更",
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "newPasswordConfirm": "新しいパスワードの確認",
+    "currentPasswordPlaceholder": "現在のパスワードを入力",
+    "newPasswordPlaceholder": "新しいパスワードを入力（8文字以上）",
+    "newPasswordConfirmPlaceholder": "新しいパスワードをもう一度入力",
+    "withdraw": "退会",
+    "withdrawHint": "退会すると、アカウントとすべてのデータ（TODO、カテゴリー）が永久に削除されます。",
+    "withdrawConfirm": "アカウントとすべてのデータ（TODO、カテゴリー）が永久に削除されます。退会しますか？",
+    "passwordChanged": "パスワードが変更されました。"
+  },
+  "error": {
+    "emailInvalid": "メールアドレスの形式が正しくありません",
+    "passwordTooShort": "パスワードは8文字以上である必要があります",
+    "passwordMismatch": "パスワードが一致しません",
+    "loginFailed": "メールアドレスまたはパスワードが正しくありません",
+    "emailDuplicate": "既に使用されているメールアドレスです",
+    "fetchFailed": "データの取得に失敗しました。",
+    "generic": "エラーが発生しました。もう一度お試しください。"
+  }
+}

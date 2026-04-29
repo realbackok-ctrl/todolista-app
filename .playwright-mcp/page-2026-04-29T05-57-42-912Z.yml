@@ -1,0 +1,26 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]: ✅
+      - heading "TodoList" [level=1] [ref=e8]
+    - paragraph [ref=e9]: 새 계정 만들기
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]: 이메일
+      - textbox "이메일" [ref=e13]:
+        - /placeholder: 이메일을 입력하세요
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e16]: 비밀번호
+        - textbox "비밀번호" [ref=e17]:
+          - /placeholder: 비밀번호를 입력하세요
+      - paragraph [ref=e18]: 최소 8자 이상 입력하세요
+    - generic [ref=e19]:
+      - generic [ref=e20]: 비밀번호 확인
+      - textbox "비밀번호 확인" [ref=e21]:
+        - /placeholder: 비밀번호를 다시 입력하세요
+    - button "회원가입" [ref=e22]
+  - paragraph [ref=e23]:
+    - text: 이미 계정이 있으신가요?
+    - link "로그인" [ref=e24] [cursor=pointer]:
+      - /url: /login
