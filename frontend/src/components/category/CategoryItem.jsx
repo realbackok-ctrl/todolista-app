@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import Modal from '../common/Modal';
@@ -9,6 +10,7 @@ import useDeleteCategoryMutation from '../../queries/useDeleteCategoryMutation';
  * @param {{ id: string, name: string }} category
  */
 function CategoryItem({ category }) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(category.name);
   const [editError, setEditError] = useState('');
@@ -30,7 +32,7 @@ function CategoryItem({ category }) {
 
   const handleEditSave = () => {
     if (!editName.trim()) {
-      setEditError('카테고리 이름을 입력해 주세요');
+      setEditError(t('category.requiredError'));
       return;
     }
     setEditError('');
@@ -43,7 +45,7 @@ function CategoryItem({ category }) {
         },
         onError: (error) => {
           if (error?.response?.status === 409) {
-            setEditError('이미 사용 중인 카테고리 이름입니다');
+            setEditError(t('category.duplicateError'));
           }
         },
       }
@@ -77,7 +79,7 @@ function CategoryItem({ category }) {
             onClick={handleEditSave}
             isLoading={updateMutation.isPending}
           >
-            저장
+            {t('common.save')}
           </Button>
           <Button
             type="button"
@@ -85,7 +87,7 @@ function CategoryItem({ category }) {
             className="h-10 px-3 text-sm"
             onClick={handleEditCancel}
           >
-            취소
+            {t('common.cancel')}
           </Button>
         </div>
       </div>
@@ -103,7 +105,7 @@ function CategoryItem({ category }) {
             className="h-8 px-3 text-xs"
             onClick={handleEditStart}
           >
-            수정
+            {t('common.edit')}
           </Button>
           <Button
             type="button"
@@ -111,7 +113,7 @@ function CategoryItem({ category }) {
             className="h-8 px-3 text-xs"
             onClick={() => setDeleteModalOpen(true)}
           >
-            삭제
+            {t('common.delete')}
           </Button>
         </div>
       </div>
@@ -119,11 +121,10 @@ function CategoryItem({ category }) {
       <Modal
         isOpen={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
-        title="카테고리 삭제"
+        title={t('common.delete')}
       >
         <p className="text-sm text-gray-700">
-          <span className="font-medium">&quot;{category.name}&quot;</span> 카테고리를 삭제하시겠습니까?
-          연결된 할일의 카테고리가 해제됩니다.
+          <span className="font-medium">&quot;{category.name}&quot;</span> {t('category.deleteConfirm')}
         </p>
         <div className="flex gap-3 mt-6">
           <Button
@@ -131,7 +132,7 @@ function CategoryItem({ category }) {
             onClick={() => setDeleteModalOpen(false)}
             className="flex-1"
           >
-            취소
+            {t('common.cancel')}
           </Button>
           <Button
             variant="danger"
@@ -139,7 +140,7 @@ function CategoryItem({ category }) {
             isLoading={deleteMutation.isPending}
             className="flex-1"
           >
-            삭제
+            {t('common.delete')}
           </Button>
         </div>
       </Modal>

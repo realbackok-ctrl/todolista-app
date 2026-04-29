@@ -17,12 +17,15 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    supportedLngs: ['ko', 'en', 'ja'],
+    nonExplicitSupportedLngs: true,
+    load: 'languageOnly',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
     detection: {
-      order: ['querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag'],
+      order: ['navigator', 'querystring', 'localStorage', 'cookie', 'htmlTag'],
       caches: ['localStorage', 'cookie'],
     },
   });

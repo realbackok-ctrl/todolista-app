@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import useCreateCategoryMutation from '../../queries/useCreateCategoryMutation';
 
 function CategoryForm() {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
 
@@ -12,7 +14,7 @@ function CategoryForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) {
-      setNameError('카테고리 이름을 입력해 주세요');
+      setNameError(t('category.requiredError'));
       return;
     }
     setNameError('');
@@ -25,7 +27,7 @@ function CategoryForm() {
         },
         onError: (error) => {
           if (error?.response?.status === 409) {
-            setNameError('이미 사용 중인 카테고리 이름입니다');
+            setNameError(t('category.duplicateError'));
           }
         },
       }
@@ -40,7 +42,7 @@ function CategoryForm() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="새 카테고리 이름"
+          placeholder={t('category.addPlaceholder')}
           error={nameError}
         />
       </div>
@@ -50,7 +52,7 @@ function CategoryForm() {
         isLoading={createMutation.isPending}
         className="flex-shrink-0 mt-0"
       >
-        추가
+        {t('common.add')}
       </Button>
     </form>
   );

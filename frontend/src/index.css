@@ -1,1 +1,82 @@
 @import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+html.dark body {
+  background-color: #0f172a;
+  color: #e5e7eb;
+}
+
+.global-preferences {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pref-select,
+.pref-theme-btn {
+  height: 34px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #374151;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+  padding: 0 10px;
+}
+
+.pref-theme-btn {
+  min-width: 54px;
+}
+
+html.dark .pref-select,
+html.dark .pref-theme-btn {
+  border-color: #334155;
+  background: rgba(15, 23, 42, 0.92);
+  color: #e2e8f0;
+}
+
+html.dark .bg-gray-50 {
+  background-color: #0f172a !important;
+}
+
+html.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+html.dark .text-gray-900 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-gray-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-gray-600,
+html.dark .text-gray-500,
+html.dark .text-gray-400 {
+  color: #94a3b8 !important;
+}
+
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+  border-color: #334155 !important;
+}
