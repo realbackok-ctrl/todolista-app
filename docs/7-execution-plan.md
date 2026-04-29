@@ -12,6 +12,12 @@
 |------|--------|--------|-----------|
 | 1.0 | 2026-04-28 | Execution Planner | 최초 작성 (DB 5건, BE 8건, FE 14건, 총 27 Task) |
 | 1.1 | 2026-04-28 | Executor | DB-01~DB-05 완료 (체크박스 체크 완료) |
+| 1.2 | 2026-04-29 | Executor | BE-01 완료 (체크박스 체크 완료) |
+| 1.3 | 2026-04-29 | Executor | BE-02~BE-03 완료 (체크박스 체크 완료) |
+| 1.4 | 2026-04-29 | Executor | BE-04~BE-05 완료 (체크박스 체크 완료) |
+| 1.5 | 2026-04-29 | Executor | BE-06~BE-07 완료 (체크박스 체크 완료) |
+| 1.6 | 2026-04-29 | Executor | BE-08 완료 (체크박스 체크 완료) |
+| 1.7 | 2026-04-29 | Executor | DB-04 완료 (체크박스 체크 완료) |
 
 ---
 
@@ -118,8 +124,8 @@ FE-01
 - [x] `todolista_test` DB 생성 및 `schema.sql` 동일 적용
 - [x] `.env.test`에 `DATABASE_URL`이 `todolista_test`를 가리키도록 설정
 - [x] `.env.test`가 `.gitignore`에 등록됨
-- [ ] `NODE_ENV=test` 실행 시 `.env.test`를 자동 로드하는 로직 구현 확인
-- [ ] 테스트 전후 `TRUNCATE ... CASCADE` 초기화 스크립트 준비 완료
+- [x] `NODE_ENV=test` 실행 시 `.env.test`를 자동 로드하는 로직 구현 확인
+- [x] 테스트 전후 `TRUNCATE ... CASCADE` 초기화 스크립트 준비 완료
 
 **의존성:** DB-02 완료 후
 **예상 소요:** 30분
@@ -149,11 +155,11 @@ FE-01
 **설명:** Node.js 24 + Express 5 기반 백엔드 프로젝트의 패키지 구성, 환경변수 템플릿, 전체 디렉토리 골격을 세팅한다.
 
 **완료 조건:**
-- [ ] `package.json`에 dependencies(`express`, `pg`, `bcrypt`, `jsonwebtoken`, `dotenv`) 및 devDependencies(`jest`, `supertest`, `nodemon`) 정의 완료
-- [ ] `backend/src/` 하위 `routes/`, `controllers/`, `services/`, `repositories/`, `middlewares/`, `db/`, `utils/` 폴더 및 빈 파일 생성 완료
-- [ ] `.env.example`에 `DATABASE_URL`, `JWT_SECRET`, `PORT`, `BCRYPT_SALT_ROUNDS` 키 정의 완료
-- [ ] `server.js`에서 `app.js`를 import하여 `node server.js` 기동 확인
-- [ ] `.gitignore`에 `.env`, `node_modules` 제외 설정 완료
+- [x] `package.json`에 dependencies(`express`, `pg`, `bcrypt`, `jsonwebtoken`, `dotenv`) 및 devDependencies(`jest`, `supertest`, `nodemon`) 정의 완료
+- [x] `backend/src/` 하위 `routes/`, `controllers/`, `services/`, `repositories/`, `middlewares/`, `db/`, `utils/` 폴더 및 빈 파일 생성 완료
+- [x] `.env.example`에 `DATABASE_URL`, `JWT_SECRET`, `PORT`, `BCRYPT_SALT_ROUNDS` 키 정의 완료
+- [x] `server.js`에서 `app.js`를 import하여 `node server.js` 기동 확인
+- [x] `.gitignore`에 `.env`, `node_modules` 제외 설정 완료
 
 **의존성:** 없음
 **예상 소요:** 30분
@@ -165,12 +171,12 @@ FE-01
 **설명:** 모든 도메인 레이어가 공유하는 PostgreSQL 커넥션 풀, AppError, errorHandler, jwtUtils, hashPassword를 구현하여 공통 기반을 확립한다.
 
 **완료 조건:**
-- [ ] `db/pool.js`에서 pg Pool 싱글턴 생성 및 `DATABASE_URL` 환경변수로 연결, `query` 헬퍼 함수 export 완료
-- [ ] `utils/AppError.js`에 `statusCode`, `code`, `message` 필드를 갖는 커스텀 Error 클래스 구현
-- [ ] `middlewares/errorHandler.js`에서 `{ error: { code, message } }` 표준 형식으로 응답 처리 완료
-- [ ] `utils/jwtUtils.js`에 HS-512 알고리즘으로 `sign` / `verify` 함수 구현 및 만료 시간 설정
-- [ ] `utils/hashPassword.js`에 bcrypt salt 12 이상으로 `hash` / `compare` 함수 구현
-- [ ] `app.js`에 `express.json()` 파서 및 `errorHandler` 최하단 등록 완료
+- [x] `db/pool.js`에서 pg Pool 싱글턴 생성 및 `DATABASE_URL` 환경변수로 연결, `query` 헬퍼 함수 export 완료
+- [x] `utils/AppError.js`에 `statusCode`, `code`, `message` 필드를 갖는 커스텀 Error 클래스 구현
+- [x] `middlewares/errorHandler.js`에서 `{ error: { code, message } }` 표준 형식으로 응답 처리 완료
+- [x] `utils/jwtUtils.js`에 HS-512 알고리즘으로 `sign` / `verify` 함수 구현 및 만료 시간 설정
+- [x] `utils/hashPassword.js`에 bcrypt salt 12 이상으로 `hash` / `compare` 함수 구현
+- [x] `app.js`에 `express.json()` 파서 및 `errorHandler` 최하단 등록 완료
 
 **의존성:** BE-01 완료 후
 **예상 소요:** 1시간
@@ -182,10 +188,10 @@ FE-01
 **설명:** `Authorization: Bearer {token}` 헤더를 검증하여 `req.user`에 페이로드를 주입하는 인증 미들웨어를 구현한다. (FR-CMN-01)
 
 **완료 조건:**
-- [ ] 토큰 누락 시 401 / `UNAUTHORIZED` 응답 처리
-- [ ] `jwtUtils.verify` 호출로 만료·위변조 시 401 응답 처리
-- [ ] 검증 성공 시 `req.user = { id, email }` 설정 후 `next()` 호출
-- [ ] `middlewares/authenticate.js`에서 named export로 제공
+- [x] 토큰 누락 시 401 / `UNAUTHORIZED` 응답 처리
+- [x] `jwtUtils.verify` 호출로 만료·위변조 시 401 응답 처리
+- [x] 검증 성공 시 `req.user = { id, email }` 설정 후 `next()` 호출
+- [x] `middlewares/authenticate.js`에서 named export로 제공
 
 **의존성:** BE-02 완료 후
 **예상 소요:** 30분
@@ -197,10 +203,10 @@ FE-01
 **설명:** `db/pool.js`가 `database/schema.sql`과 연동되어 정상 동작하는지 확인하고, 백엔드에서 DB 연결 상태를 검증한다.
 
 **완료 조건:**
-- [ ] `pool.query('SELECT NOW()')` 호출로 DB 연결 정상 동작 확인
-- [ ] `users`, `categories`, `todos` 테이블에 대한 단순 SELECT 쿼리 성공 확인
-- [ ] `.env`의 `DATABASE_URL` 미설정 시 서버 시작 시 오류 메시지 출력 확인
-- [ ] `db/pool.js`가 연결 오류 시 `console.error`로 로그를 남기는 로직 포함
+- [x] `pool.query('SELECT NOW()')` 호출로 DB 연결 정상 동작 확인
+- [x] `users`, `categories`, `todos` 테이블에 대한 단순 SELECT 쿼리 성공 확인
+- [x] `.env`의 `DATABASE_URL` 미설정 시 서버 시작 시 오류 메시지 출력 확인
+- [x] `db/pool.js`가 연결 오류 시 `console.error`로 로그를 남기는 로직 포함
 
 **의존성:** BE-02 완료 후, DB-02 완료 후
 **예상 소요:** 30분
@@ -212,12 +218,12 @@ FE-01
 **설명:** 회원가입, 로그인, 로그아웃, 회원탈퇴, 비밀번호 변경 5개 엔드포인트의 Repository / Service / Controller / Router 전 레이어를 구현한다.
 
 **완료 조건:**
-- [ ] `repositories/userRepository.js`에 `findByEmail`, `createUser`, `deleteUser`, `updatePassword` Parameterized Query 함수 구현
-- [ ] `services/authService.js`에 register(중복 이메일 409), login(자격증명 검증 후 JWT 발급), deleteAccount(Hard Delete), changePassword(현재 비밀번호 확인 → 갱신) 비즈니스 로직 구현
-- [ ] `controllers/authController.js`에서 req 파싱 → service 호출 → 표준 응답 반환 구조 완료
-- [ ] `routes/authRouter.js`에 `POST /register`, `POST /login`, `POST /logout`, `DELETE /account`, `PATCH /password` 등록 및 인증 필요 라우트에 `authenticate` 적용
-- [ ] `app.js`에 `/api/auth` 경로로 `authRouter` 마운트 완료
-- [ ] 입력값 검증(이메일 형식, 비밀번호 최소 8자) 미들웨어 적용
+- [x] `repositories/userRepository.js`에 `findByEmail`, `createUser`, `deleteUser`, `updatePassword` Parameterized Query 함수 구현
+- [x] `services/authService.js`에 register(중복 이메일 409), login(자격증명 검증 후 JWT 발급), deleteAccount(Hard Delete), changePassword(현재 비밀번호 확인 → 갱신) 비즈니스 로직 구현
+- [x] `controllers/authController.js`에서 req 파싱 → service 호출 → 표준 응답 반환 구조 완료
+- [x] `routes/authRouter.js`에 `POST /register`, `POST /login`, `POST /logout`, `DELETE /account`, `PATCH /password` 등록 및 인증 필요 라우트에 `authenticate` 적용
+- [x] `app.js`에 `/api/auth` 경로로 `authRouter` 마운트 완료
+- [x] 입력값 검증(이메일 형식, 비밀번호 최소 8자) 미들웨어 적용
 
 **의존성:** BE-03, BE-04 완료 후
 **예상 소요:** 2시간 30분
@@ -229,12 +235,12 @@ FE-01
 **설명:** 할일 목록 조회, 단건 조회, 생성, 수정, 상태변경, 삭제 6개 엔드포인트의 Repository / Service / Controller / Router 전 레이어를 구현한다.
 
 **완료 조건:**
-- [ ] `repositories/todoRepository.js`에 `findAllByUserId`(status·categoryId 필터 지원), `findByIdAndUserId`, `create`, `update`, `updateStatus`, `deleteById` Parameterized Query 구현
-- [ ] `services/todoService.js`에 소유권 검증(타 사용자 접근 시 403), 미존재 todo 404, COMPLETED 처리 시 `completedAt` 기록 / PENDING 복구 시 null 처리 로직 구현 (BR-TODO-02)
-- [ ] `controllers/todoController.js`에서 `req.user.id` 기반 사용자 격리 및 표준 응답 반환 구조 완료
-- [ ] `routes/todoRouter.js`에 `GET /`, `POST /`, `GET /:id`, `PUT /:id`, `PATCH /:id/status`, `DELETE /:id` 등록 및 전체 라우트에 `authenticate` 적용
-- [ ] 입력값 검증(title 필수·공백 불가, status enum 값) 미들웨어 적용
-- [ ] `app.js`에 `/api/todos` 경로로 `todoRouter` 마운트 완료
+- [x] `repositories/todoRepository.js`에 `findAllByUserId`(status·categoryId 필터 지원), `findByIdAndUserId`, `create`, `update`, `updateStatus`, `deleteById` Parameterized Query 구현
+- [x] `services/todoService.js`에 소유권 검증(타 사용자 접근 시 403), 미존재 todo 404, COMPLETED 처리 시 `completedAt` 기록 / PENDING 복구 시 null 처리 로직 구현 (BR-TODO-02)
+- [x] `controllers/todoController.js`에서 `req.user.id` 기반 사용자 격리 및 표준 응답 반환 구조 완료
+- [x] `routes/todoRouter.js`에 `GET /`, `POST /`, `GET /:id`, `PUT /:id`, `PATCH /:id/status`, `DELETE /:id` 등록 및 전체 라우트에 `authenticate` 적용
+- [x] 입력값 검증(title 필수·공백 불가, status enum 값) 미들웨어 적용
+- [x] `app.js`에 `/api/todos` 경로로 `todoRouter` 마운트 완료
 
 **의존성:** BE-03, BE-04 완료 후
 **예상 소요:** 2시간
@@ -246,12 +252,12 @@ FE-01
 **설명:** 카테고리 목록 조회, 생성, 수정, 삭제 4개 엔드포인트의 Repository / Service / Controller / Router 전 레이어를 구현한다.
 
 **완료 조건:**
-- [ ] `repositories/categoryRepository.js`에 `findAllByUserId`, `findByIdAndUserId`, `create`, `update`, `deleteById` Parameterized Query 구현
-- [ ] `services/categoryService.js`에 소유권 검증(403), 미존재 카테고리 404, 동일 사용자 내 중복 카테고리명 409 처리 구현 (BR-CAT-01)
-- [ ] 카테고리 삭제 시 DB의 `ON DELETE SET NULL`에 의해 연결된 todos의 `category_id`가 자동 null 처리됨을 확인 (BR-CAT-02)
-- [ ] `routes/categoryRouter.js`에 `GET /`, `POST /`, `PUT /:id`, `DELETE /:id` 등록 및 전체 라우트에 `authenticate` 적용
-- [ ] 입력값 검증(name 필수·공백 불가) 미들웨어 적용
-- [ ] `app.js`에 `/api/categories` 경로로 `categoryRouter` 마운트 완료
+- [x] `repositories/categoryRepository.js`에 `findAllByUserId`, `findByIdAndUserId`, `create`, `update`, `deleteById` Parameterized Query 구현
+- [x] `services/categoryService.js`에 소유권 검증(403), 미존재 카테고리 404, 동일 사용자 내 중복 카테고리명 409 처리 구현 (BR-CAT-01)
+- [x] 카테고리 삭제 시 DB의 `ON DELETE SET NULL`에 의해 연결된 todos의 `category_id`가 자동 null 처리됨을 확인 (BR-CAT-02)
+- [x] `routes/categoryRouter.js`에 `GET /`, `POST /`, `PUT /:id`, `DELETE /:id` 등록 및 전체 라우트에 `authenticate` 적용
+- [x] 입력값 검증(name 필수·공백 불가) 미들웨어 적용
+- [x] `app.js`에 `/api/categories` 경로로 `categoryRouter` 마운트 완료
 
 **의존성:** BE-03, BE-04 완료 후
 **예상 소요:** 1시간 30분
@@ -263,11 +269,11 @@ FE-01
 **설명:** Jest + supertest로 인증 플로우 및 핵심 CRUD 경로의 통합 테스트를 작성하여 회귀를 방지한다.
 
 **완료 조건:**
-- [ ] 테스트 DB 연결 설정 및 각 suite 실행 전후 `TRUNCATE ... CASCADE` 초기화 구조 완료
-- [ ] 인증 테스트: 회원가입 성공/중복 이메일 409, 로그인 성공 201/불일치 401, 미인증 보호 라우트 접근 401 검증
-- [ ] Todo CRUD 테스트: 생성 201, 목록 조회 200(필터 포함), 단건 조회 200/404, 수정 200, 상태변경 200, 삭제 200, 타 사용자 접근 403 검증
-- [ ] Category CRUD 테스트: 생성 201, 목록 조회 200, 수정 200, 삭제 200, 중복명 409, 타 사용자 접근 403 검증
-- [ ] `npm test` 실행 시 모든 테스트 통과
+- [x] 테스트 DB 연결 설정 및 각 suite 실행 전후 `TRUNCATE ... CASCADE` 초기화 구조 완료
+- [x] 인증 테스트: 회원가입 성공/중복 이메일 409, 로그인 성공 201/불일치 401, 미인증 보호 라우트 접근 401 검증
+- [x] Todo CRUD 테스트: 생성 201, 목록 조회 200(필터 포함), 단건 조회 200/404, 수정 200, 상태변경 200, 삭제 200, 타 사용자 접근 403 검증
+- [x] Category CRUD 테스트: 생성 201, 목록 조회 200, 수정 200, 삭제 200, 중복명 409, 타 사용자 접근 403 검증
+- [x] `npm test` 실행 시 모든 테스트 통과
 
 **의존성:** BE-05, BE-06, BE-07 완료 후
 **예상 소요:** 2시간

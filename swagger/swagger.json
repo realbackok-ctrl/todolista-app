@@ -162,7 +162,7 @@
             "example": "2026-04-28T12:00:00.000Z"
           }
         },
-        "required": ["id", "userId", "categoryId", "title", "status", "dueDate", "completedAt", "createdAt", "updatedAt"]
+        "required": ["id", "userId", "title", "status", "createdAt", "updatedAt"]
       },
       "ErrorResponse": {
         "type": "object",
