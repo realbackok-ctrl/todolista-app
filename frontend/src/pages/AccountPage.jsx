@@ -120,7 +120,7 @@ function AccountPage() {
           </div>
         )}
 
-        {/* 비밀번호 변경 */}
+        {/* 비밀 번호 변경 */}
         <section className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col gap-4">
           <h2 className="text-sm font-semibold text-gray-900">{t('account.changePassword')}</h2>
           <form onSubmit={handlePasswordSubmit} className="flex flex-col gap-3">
