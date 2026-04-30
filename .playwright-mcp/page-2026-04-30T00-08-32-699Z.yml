@@ -1,0 +1,41 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e61]:
+    - banner [ref=e62]:
+      - button "← 뒤로" [ref=e63]:
+        - generic [ref=e64]: ←
+        - generic [ref=e65]: 뒤로
+      - generic [ref=e66]: "|"
+      - heading "할일 수정" [level=1] [ref=e67]
+    - main [ref=e68]:
+      - generic [ref=e69]:
+        - generic [ref=e70]: PENDING
+        - button "완료로 변경" [ref=e71]
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]: 제목 *
+          - textbox "제목 *" [ref=e75]:
+            - /placeholder: 할일 제목을 입력하세요
+          - generic [ref=e88]: 할일 제목을 입력하세요
+        - generic [ref=e76]:
+          - generic [ref=e77]: 설명
+          - textbox "설명" [ref=e78]:
+            - /placeholder: 설명을 입력하세요 (선택)
+            - text: 팀장 검토 포함 일정 여유 확보 필요
+        - generic [ref=e79]:
+          - generic [ref=e80]: 카테고리
+          - combobox "카테고리" [ref=e81]:
+            - option "카테고리 없음"
+            - option "업무" [selected]
+            - option "개인"
+        - generic [ref=e82]:
+          - generic [ref=e83]: 종료일
+          - textbox "종료일" [ref=e84]
+        - paragraph [ref=e85]: "생성일: 2026-04-30 09:06"
+        - button "변경 저장" [active] [ref=e86]
+        - button "이 할일 삭제" [ref=e87]

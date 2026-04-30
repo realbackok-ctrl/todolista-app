@@ -1,0 +1,67 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e196]:
+    - banner [ref=e197]:
+      - generic [ref=e199]: TodoLista
+      - button "로그아웃" [ref=e200]
+    - generic [ref=e201]:
+      - generic [ref=e202]:
+        - button "전체" [ref=e203]
+        - button "미완료" [ref=e204]
+        - button "완료" [ref=e205]
+      - combobox [ref=e206]:
+        - option "전체 카테고리" [selected]
+        - option "업무"
+        - option "개인"
+    - main [ref=e207]:
+      - list [ref=e208]:
+        - listitem [ref=e209] [cursor=pointer]:
+          - generic [ref=e210]:
+            - button "완료" [ref=e211]
+            - paragraph [ref=e213]: 병원 예약 확인
+            - generic [ref=e214]:
+              - button "수정" [ref=e215]:
+                - img [ref=e216]
+              - button "삭제" [ref=e218]:
+                - img [ref=e219]
+        - listitem [ref=e221] [cursor=pointer]:
+          - generic [ref=e222]:
+            - button "완료" [ref=e223]
+            - generic [ref=e224]:
+              - paragraph [ref=e225]: 어린이집 하원 준비
+              - generic [ref=e227]: 개인
+            - generic [ref=e228]:
+              - button "수정" [ref=e229]:
+                - img [ref=e230]
+              - button "삭제" [ref=e232]:
+                - img [ref=e233]
+        - listitem [ref=e235] [cursor=pointer]:
+          - generic [ref=e236]:
+            - button "완료" [ref=e237]
+            - generic [ref=e238]:
+              - paragraph [ref=e239]: 마트 장보기
+              - generic [ref=e241]: 업무
+            - generic [ref=e242]:
+              - button "수정" [ref=e243]:
+                - img [ref=e244]
+              - button "삭제" [ref=e246]:
+                - img [ref=e247]
+    - button "새 할일 추가" [ref=e249]: +
+    - navigation [ref=e250]:
+      - link "할일" [ref=e251] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e252]
+        - generic [ref=e254]: 할일
+      - link "카테고리" [ref=e255] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e256]
+        - generic [ref=e258]: 카테고리
+      - link "계정" [ref=e259] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e260]
+        - generic [ref=e262]: 계정

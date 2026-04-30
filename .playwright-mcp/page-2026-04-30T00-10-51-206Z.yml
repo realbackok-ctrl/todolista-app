@@ -1,0 +1,76 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e145]:
+    - banner [ref=e146]:
+      - generic [ref=e148]: TodoLista
+      - button "로그아웃" [ref=e149]
+    - generic [ref=e150]:
+      - generic [ref=e151]:
+        - button "전체" [ref=e152]
+        - button "미완료" [ref=e153]
+        - button "완료" [ref=e154]
+      - combobox [ref=e155]:
+        - option "전체 카테고리" [selected]
+        - option "업무"
+        - option "개인"
+    - main [ref=e156]:
+      - list [ref=e157]:
+        - listitem [ref=e158] [cursor=pointer]:
+          - generic [ref=e159]:
+            - button "완료" [ref=e160]
+            - paragraph [ref=e162]: 주간 회의 자료 준비
+            - generic [ref=e163]:
+              - button "수정" [ref=e164]:
+                - img [ref=e165]
+              - button "삭제" [ref=e167]:
+                - img [ref=e168]
+        - listitem [ref=e170] [cursor=pointer]:
+          - generic [ref=e171]:
+            - button "완료" [ref=e172]
+            - paragraph [ref=e174]: 병원 예약 확인
+            - generic [ref=e175]:
+              - button "수정" [ref=e176]:
+                - img [ref=e177]
+              - button "삭제" [ref=e179]:
+                - img [ref=e180]
+        - listitem [ref=e182] [cursor=pointer]:
+          - generic [ref=e183]:
+            - button "완료" [ref=e184]
+            - generic [ref=e185]:
+              - paragraph [ref=e186]: 어린이집 하원 준비
+              - generic [ref=e188]: 개인
+            - generic [ref=e189]:
+              - button "수정" [ref=e190]:
+                - img [ref=e191]
+              - button "삭제" [ref=e193]:
+                - img [ref=e194]
+        - listitem [ref=e196] [cursor=pointer]:
+          - generic [ref=e197]:
+            - button "완료" [ref=e198]
+            - generic [ref=e199]:
+              - paragraph [ref=e200]: 마트 장보기
+              - generic [ref=e202]: 업무
+            - generic [ref=e203]:
+              - button "수정" [ref=e204]:
+                - img [ref=e205]
+              - button "삭제" [ref=e207]:
+                - img [ref=e208]
+    - button "새 할일 추가" [ref=e210]: +
+    - navigation [ref=e211]:
+      - link "할일" [ref=e212] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e213]
+        - generic [ref=e215]: 할일
+      - link "카테고리" [ref=e216] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e217]
+        - generic [ref=e219]: 카테고리
+      - link "계정" [ref=e220] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e221]
+        - generic [ref=e223]: 계정

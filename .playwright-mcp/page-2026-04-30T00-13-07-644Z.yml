@@ -1,0 +1,79 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e61]:
+    - banner [ref=e62]:
+      - generic [ref=e64]: TodoLista
+      - button "로그아웃" [ref=e65]
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - button "전체" [ref=e68]
+        - button "미완료" [ref=e69]
+        - button "완료" [ref=e70]
+      - combobox [ref=e71]:
+        - option "전체 카테고리" [selected]
+        - option "업무"
+        - option "개인"
+    - main [ref=e72]:
+      - list [ref=e73]:
+        - listitem [ref=e74] [cursor=pointer]:
+          - generic [ref=e75]:
+            - button "완료" [ref=e76]
+            - generic [ref=e77]:
+              - paragraph [ref=e78]: 주간 회의 자료 준비 (overdue)
+              - generic [ref=e80]: 2026-04-29 09:00
+              - paragraph [ref=e81]: 기한 초과
+            - generic [ref=e82]:
+              - button "수정" [ref=e83]:
+                - img [ref=e84]
+              - button "삭제" [ref=e86]:
+                - img [ref=e87]
+        - listitem [ref=e89] [cursor=pointer]:
+          - generic [ref=e90]:
+            - button "완료" [ref=e91]
+            - paragraph [ref=e93]: 주간 회의 자료 준비
+            - generic [ref=e94]:
+              - button "수정" [ref=e95]:
+                - img [ref=e96]
+              - button "삭제" [ref=e98]:
+                - img [ref=e99]
+        - listitem [ref=e101] [cursor=pointer]:
+          - generic [ref=e102]:
+            - button "완료" [ref=e103]
+            - generic [ref=e104]:
+              - paragraph [ref=e105]: 어린이집 하원 준비
+              - generic [ref=e107]: 개인
+            - generic [ref=e108]:
+              - button "수정" [ref=e109]:
+                - img [ref=e110]
+              - button "삭제" [ref=e112]:
+                - img [ref=e113]
+        - listitem [ref=e115] [cursor=pointer]:
+          - generic [ref=e116]:
+            - button "완료" [ref=e117]
+            - generic [ref=e118]:
+              - paragraph [ref=e119]: 마트 장보기
+              - generic [ref=e121]: 업무
+            - generic [ref=e122]:
+              - button "수정" [ref=e123]:
+                - img [ref=e124]
+              - button "삭제" [ref=e126]:
+                - img [ref=e127]
+    - button "새 할일 추가" [ref=e129]: +
+    - navigation [ref=e130]:
+      - link "할일" [ref=e131] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e132]
+        - generic [ref=e134]: 할일
+      - link "카테고리" [ref=e135] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e136]
+        - generic [ref=e138]: 카테고리
+      - link "계정" [ref=e139] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e140]
+        - generic [ref=e142]: 계정

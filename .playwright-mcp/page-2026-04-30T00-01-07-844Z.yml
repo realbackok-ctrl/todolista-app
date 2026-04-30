@@ -1,0 +1,6 @@
+- generic [ref=e1]:
+  - combobox "Language" [ref=e2]:
+    - option "KO" [selected]
+    - option "EN"
+    - option "JA"
+  - button "Switch to dark mode" [ref=e3]: Dark

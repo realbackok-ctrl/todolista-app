@@ -1,0 +1,47 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e56]:
+    - banner [ref=e57]:
+      - generic [ref=e59]: TodoLista
+      - button "로그아웃" [ref=e60]
+    - generic [ref=e61]:
+      - generic [ref=e62]:
+        - button "전체" [ref=e63]
+        - button "미완료" [ref=e64]
+        - button "완료" [ref=e65]
+      - combobox [ref=e66]:
+        - option "전체 카테고리" [selected]
+        - option "업무"
+        - option "개인"
+    - main [ref=e67]:
+      - list [ref=e68]:
+        - listitem [ref=e69] [cursor=pointer]:
+          - generic [ref=e70]:
+            - button "완료" [ref=e71]
+            - generic [ref=e72]:
+              - paragraph [ref=e73]: 마트 장보기
+              - generic [ref=e75]: 업무
+            - generic [ref=e76]:
+              - button "수정" [ref=e77]:
+                - img [ref=e78]
+              - button "삭제" [ref=e80]:
+                - img [ref=e81]
+    - button "새 할일 추가" [ref=e83]: +
+    - navigation [ref=e84]:
+      - link "할일" [ref=e85] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e86]
+        - generic [ref=e88]: 할일
+      - link "카테고리" [ref=e89] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e90]
+        - generic [ref=e92]: 카테고리
+      - link "계정" [ref=e93] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e94]
+        - generic [ref=e96]: 계정
