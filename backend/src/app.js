@@ -7,8 +7,25 @@ const errorHandler = require('./middlewares/errorHandler');
 const logger = require('./utils/logger');
 const app = express();
 
+const buildAllowedOrigins = () => {
+  const origins = new Set(['https://fe-kms.vercel.app', 'http://localhost:5173']);
+  if (process.env.CORS_ALLOWED_ORIGINS) {
+    process.env.CORS_ALLOWED_ORIGINS.split(',').forEach(o => origins.add(o.trim()));
+  }
+  if (process.env.FRONTEND_URL) {
+    origins.add(process.env.FRONTEND_URL.trim());
+  }
+  return [...origins];
+};
+
+const allowedOrigins = buildAllowedOrigins();
+
 const corsOptions = {
-  origin: process.env.CORS_ALLOWED_ORIGINS?.split(',').map(o => o.trim()) || true,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS: ${origin} is not allowed`));
+  },
   credentials: true,
 };
 

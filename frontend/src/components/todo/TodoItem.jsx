@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isOverdue, formatDate } from '../../utils/dateUtils';
 import useToggleTodoMutation from '../../queries/useToggleTodoMutation';
 import useDeleteTodoMutation from '../../queries/useDeleteTodoMutation';
+import Button from '../common/Button';
+import Modal from '../common/Modal';
 
 /**
  * 할일 목록의 개별 카드 컴포넌트.
@@ -15,6 +18,7 @@ function TodoItem({ todo }) {
   const navigate = useNavigate();
   const toggleMutation = useToggleTodoMutation();
   const deleteMutation = useDeleteTodoMutation();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const overdue = isOverdue(todo.dueDate, todo.status);
   const completed = todo.status === 'COMPLETED';
@@ -36,7 +40,13 @@ function TodoItem({ todo }) {
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    deleteMutation.mutate(todo.id);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    deleteMutation.mutate(todo.id, {
+      onSuccess: () => setDeleteModalOpen(false),
+    });
   };
 
   const handleEdit = (e) => {
@@ -45,6 +55,7 @@ function TodoItem({ todo }) {
   };
 
   return (
+    <>
     <li className={cardClass} onClick={() => navigate(`/todos/${todo.id}`)}>
       <div className="flex items-start gap-3">
         {/* 체크박스 */}
@@ -122,6 +133,32 @@ function TodoItem({ todo }) {
         </div>
       </div>
     </li>
+
+    <Modal
+      isOpen={deleteModalOpen}
+      onClose={() => setDeleteModalOpen(false)}
+      title={t('common.delete')}
+    >
+      <p className="text-sm text-gray-700">{t('todo.form.deleteConfirm')}</p>
+      <div className="flex gap-3 mt-6">
+        <Button
+          variant="secondary"
+          onClick={() => setDeleteModalOpen(false)}
+          className="flex-1"
+        >
+          {t('common.cancel')}
+        </Button>
+        <Button
+          variant="danger"
+          onClick={handleDeleteConfirm}
+          isLoading={deleteMutation.isPending}
+          className="flex-1"
+        >
+          {t('common.delete')}
+        </Button>
+      </div>
+    </Modal>
+    </>
   );
 }
 
