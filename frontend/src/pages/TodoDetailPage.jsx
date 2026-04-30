@@ -25,7 +25,7 @@ function TodoDetailPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
         <p className="text-gray-600">
-          {is404 ? '존재하지 않는 할일입니다.' : '할일을 불러오지 못했습니다.'}
+          {is404 ? '존재하지 않는 할일 입니다.' : '할일을 불러오지 못했습니다.'}
         </p>
         <button
           onClick={() => navigate('/todos')}
