@@ -1,0 +1,41 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e52]:
+    - banner [ref=e53]:
+      - heading "카테고리 관리" [level=1] [ref=e54]
+    - main [ref=e55]:
+      - generic [ref=e56]:
+        - textbox "새 카테고리 이름" [ref=e59]
+        - button "추가" [ref=e60]
+      - separator [ref=e61]
+      - list [ref=e77]:
+        - listitem [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e80]: 업무
+            - generic [ref=e81]:
+              - button "수정" [ref=e82]
+              - button "삭제" [ref=e83]
+        - listitem [ref=e84]:
+          - generic [ref=e85]:
+            - generic [ref=e86]: 개인
+            - generic [ref=e87]:
+              - button "수정" [ref=e88]
+              - button "삭제" [ref=e89]
+    - navigation [ref=e64]:
+      - link "할일" [ref=e65] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e66]
+        - generic [ref=e68]: 할일
+      - link "카테고리" [ref=e69] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e70]
+        - generic [ref=e72]: 카테고리
+      - link "계정" [ref=e73] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e74]
+        - generic [ref=e76]: 계정

@@ -1,0 +1,29 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e52]:
+    - banner [ref=e53]:
+      - heading "카테고리 관리" [level=1] [ref=e54]
+    - main [ref=e55]:
+      - generic [ref=e56]:
+        - textbox "새 카테고리 이름" [ref=e59]
+        - button "추가" [ref=e60]
+      - separator [ref=e61]
+      - paragraph [ref=e63]: 카테고리가 없습니다. 위에서 새 카테고리를 추가해 보세요.
+    - navigation [ref=e64]:
+      - link "할일" [ref=e65] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e66]
+        - generic [ref=e68]: 할일
+      - link "카테고리" [ref=e69] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e70]
+        - generic [ref=e72]: 카테고리
+      - link "계정" [ref=e73] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e74]
+        - generic [ref=e76]: 계정

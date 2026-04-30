@@ -1,0 +1,51 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e51]:
+    - banner [ref=e52]:
+      - heading "계정 설정" [level=1] [ref=e53]
+    - main [ref=e54]:
+      - generic [ref=e55]:
+        - paragraph [ref=e56]: 이메일
+        - paragraph [ref=e57]: e2e.prod.0430@todolista.test
+      - generic [ref=e58]:
+        - heading "비밀번호 변경" [level=2] [ref=e59]
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]: 현재 비밀번호
+            - textbox "현재 비밀번호" [ref=e63]:
+              - /placeholder: 현재 비밀번호 입력
+              - text: Test1234!
+          - generic [ref=e64]:
+            - generic [ref=e65]: 새 비밀번호
+            - textbox "새 비밀번호" [ref=e66]:
+              - /placeholder: 새 비밀번호 입력 (최소 8자)
+              - text: NewPass1234!
+          - generic [ref=e67]:
+            - generic [ref=e68]: 새 비밀번호 확인
+            - textbox "새 비밀번호 확인" [ref=e69]:
+              - /placeholder: 새 비밀번호 다시 입력
+              - text: DifferentPass!
+            - generic [ref=e88]: 비밀번호가 일치하지 않습니다
+          - button "비밀번호 변경" [active] [ref=e70]
+      - generic [ref=e71]:
+        - heading "회원탈퇴" [level=2] [ref=e72]
+        - paragraph [ref=e73]: 탈퇴 시 계정과 모든 데이터(할일, 카테고리)가 영구적으로 삭제됩니다.
+        - button "회원탈퇴" [ref=e74]
+    - navigation [ref=e75]:
+      - link "할일" [ref=e76] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e77]
+        - generic [ref=e79]: 할일
+      - link "카테고리" [ref=e80] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e81]
+        - generic [ref=e83]: 카테고리
+      - link "계정" [ref=e84] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e85]
+        - generic [ref=e87]: 계정

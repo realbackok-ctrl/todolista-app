@@ -1,0 +1,40 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e125]:
+    - banner [ref=e126]:
+      - generic [ref=e128]: TodoLista
+      - button "로그아웃" [ref=e129]
+    - generic [ref=e130]:
+      - generic [ref=e131]:
+        - button "전체" [ref=e132]
+        - button "미완료" [ref=e133]
+        - button "완료" [ref=e134]
+      - combobox [ref=e135]:
+        - option "전체 카테고리" [selected]
+        - option "업무"
+        - option "개인"
+        - option "가사"
+        - option "육아"
+    - main [ref=e136]:
+      - generic [ref=e137]:
+        - paragraph [ref=e138]: 등록된 할일이 없습니다.
+        - paragraph [ref=e139]: + 버튼을 눌러 할일을 추가해 보세요.
+    - button "새 할일 추가" [ref=e140]: +
+    - navigation [ref=e141]:
+      - link "할일" [ref=e142] [cursor=pointer]:
+        - /url: /todos
+        - img [ref=e143]
+        - generic [ref=e145]: 할일
+      - link "카테고리" [ref=e146] [cursor=pointer]:
+        - /url: /categories
+        - img [ref=e147]
+        - generic [ref=e149]: 카테고리
+      - link "계정" [ref=e150] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e151]
+        - generic [ref=e153]: 계정

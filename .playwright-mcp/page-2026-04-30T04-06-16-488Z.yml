@@ -1,0 +1,42 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e516]:
+    - banner [ref=e517]:
+      - button "← 뒤로" [ref=e518]:
+        - generic [ref=e519]: ←
+        - generic [ref=e520]: 뒤로
+      - generic [ref=e521]: "|"
+      - heading "할일 수정" [level=1] [ref=e522]
+    - main [ref=e523]:
+      - generic [ref=e524]:
+        - generic [ref=e525]: PENDING
+        - button "완료로 변경" [ref=e526]
+      - generic [ref=e527]:
+        - generic [ref=e528]:
+          - generic [ref=e529]: 제목 *
+          - textbox "제목 *" [ref=e530]:
+            - /placeholder: 할일 제목을 입력하세요
+            - text: 마트 장보기
+        - generic [ref=e531]:
+          - generic [ref=e532]: 설명
+          - textbox "설명" [ref=e533]:
+            - /placeholder: 설명을 입력하세요 (선택)
+        - generic [ref=e534]:
+          - generic [ref=e535]: 카테고리
+          - combobox "카테고리" [ref=e536]:
+            - option "카테고리 없음"
+            - option "업무"
+            - option "개인"
+            - option "가사" [selected]
+            - option "육아"
+        - generic [ref=e537]:
+          - generic [ref=e538]: 종료일
+          - textbox "종료일" [ref=e539]
+        - paragraph [ref=e540]: "생성일: 2026-04-30 13:03"
+        - button "변경 저장" [ref=e541]
+        - button "이 할일 삭제" [ref=e542]

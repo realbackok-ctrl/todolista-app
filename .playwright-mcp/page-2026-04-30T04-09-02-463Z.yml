@@ -1,0 +1,27 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e108]:
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - generic [ref=e111]: ✅
+        - heading "TodoList" [level=1] [ref=e112]
+      - paragraph [ref=e113]: 할일 목록
+    - generic [ref=e114]:
+      - generic [ref=e115]:
+        - generic [ref=e116]: 이메일
+        - textbox "이메일" [ref=e117]:
+          - /placeholder: 이메일을 입력하세요
+      - generic [ref=e118]:
+        - generic [ref=e119]: 비밀번호
+        - textbox "비밀번호" [ref=e120]:
+          - /placeholder: 비밀번호를 입력하세요
+      - button "로그인" [ref=e121]
+    - paragraph [ref=e122]:
+      - text: 계정이 없으신가요?
+      - link "회원가입" [ref=e123] [cursor=pointer]:
+        - /url: /register

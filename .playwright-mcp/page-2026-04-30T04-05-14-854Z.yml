@@ -1,0 +1,36 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - combobox "Language" [ref=e4]:
+      - option "KO" [selected]
+      - option "EN"
+      - option "JA"
+    - button "Switch to dark mode" [ref=e5]: Dark
+  - generic [ref=e217]:
+    - banner [ref=e218]:
+      - button "← 뒤로" [ref=e219]:
+        - generic [ref=e220]: ←
+        - generic [ref=e221]: 뒤로
+      - generic [ref=e222]: "|"
+      - heading "새 할일 추가" [level=1] [ref=e223]
+    - main [ref=e224]:
+      - generic [ref=e225]:
+        - generic [ref=e226]:
+          - generic [ref=e227]: 제목 *
+          - textbox "제목 *" [ref=e228]:
+            - /placeholder: 할일 제목을 입력하세요
+        - generic [ref=e229]:
+          - generic [ref=e230]: 설명
+          - textbox "설명" [ref=e231]:
+            - /placeholder: 설명을 입력하세요 (선택)
+        - generic [ref=e232]:
+          - generic [ref=e233]: 카테고리
+          - combobox "카테고리" [ref=e234]:
+            - option "카테고리 없음" [selected]
+            - option "업무"
+            - option "개인"
+            - option "가사"
+            - option "육아"
+        - generic [ref=e235]:
+          - generic [ref=e236]: 종료일
+          - textbox "종료일" [ref=e237]
+        - button "할일 추가" [ref=e238]
