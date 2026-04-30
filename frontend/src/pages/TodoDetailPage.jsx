@@ -39,7 +39,7 @@ function TodoDetailPage() {
 
   const todo = todoData?.todo ?? todoData;
 
-  // 생성 모드: 저장 후 목록으로 이동
+  // 생성 모드: 저장 후 목록으로 이동 할것 
   // 수정 모드: onSuccess 없이 null → 저장 후 페이지 유지 (쿼리 무효화로 자동 반영)
   const createOnSuccess = () => navigate('/todos');
 
